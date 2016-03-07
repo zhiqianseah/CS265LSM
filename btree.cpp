@@ -18,9 +18,6 @@ void BTree::insert(int key, int value){
 	//node to insert our element. start at the root node
 	Node* insert_node = find_leaf(root_node, key);
 
-	std::cout<<"depth:"<<depth<<std::endl;
-
-
 	//navigate to the leaf of the BTree
 	/*
 	for (int x = 0; x< depth; x++) {
@@ -38,7 +35,7 @@ void BTree::insert(int key, int value){
 		}
 	}
 	*/
-	insert_into_node(insert_node, key, value);
+	insert_into_node(insert_node, key, value, nullptr);
 
 }
 
@@ -49,18 +46,25 @@ BTree::Node* BTree::find_leaf(Node* insert_node, int key){
 
 	for (int y = 0; y<insert_node->node_fill; y++)
 	{
-		std::cout<<"comparing:"<<insert_node->stores[y].key<<std::endl;
+		//special case: if key is in a non-leaf node, return that node
+		if (insert_node->stores[y].key == key)
+		{
+			return insert_node;
+		}
+
 		//find the first node where the input key exceeds the node value
 		if (insert_node->stores[y].key > key)
 		{
 			return find_leaf(insert_node->children[y], key);
 		}
-		return find_leaf(insert_node->children[insert_node->node_fill], key);
+
 	}	
 
+	//if we the insert key is greater than all the node keys, it must be at the last child
+	return find_leaf(insert_node->children[insert_node->node_fill], key);
 }
 
-void BTree::insert_into_node(Node* insert_node, int key, int value) {
+void BTree::insert_into_node(Node* insert_node, int key, int value, Node* child_node) {
 
 	int curr_fill = insert_node->node_fill;
 	//if there is space in the node, add it into the node
@@ -80,28 +84,40 @@ void BTree::insert_into_node(Node* insert_node, int key, int value) {
 				//swap the positions of the input KV with the existing KV
 				int tempkey = insert_node->stores[x].key;
 				int tempvalue = insert_node->stores[x].value;
+				Node* tempnode = insert_node->children[x+1];
+
 				insert_node->stores[x].key = key;
 				insert_node->stores[x].value = value;
+
+				//add child node
+				insert_node->children[x+1] = child_node;
 				key = tempkey;
 				value = tempvalue;
+				child_node = tempnode;
 			}
 		}
 		insert_node->stores[insert_node->node_fill].key = key;
 		insert_node->stores[insert_node->node_fill].value = value;
+		insert_node->children[insert_node->node_fill+1] = child_node;
 		insert_node->node_fill++;
 
 	}
 	//else if the node is full, then we have to split
 	else{
 		std::cout<<"NODE IS FULL\n";
-		split_node(insert_node, key, value);
+		split_node(insert_node, key, value, nullptr);
 
 	}
 }
 
-void BTree::split_node(Node* node, int key, int value){
+void BTree::split_node(Node* node, int key, int value, Node* child_node){
 
 	Node* sibling_node = create_node(nullptr);
+
+	if (child_node!= nullptr){
+		sibling_node->isleaf = false;
+	}
+
 
 	//get the middle 2 entries
 	int middlekey_right = node->stores[order].key;
@@ -120,27 +136,49 @@ void BTree::split_node(Node* node, int key, int value){
 		{
 			sibling_node->stores[x-order].key = node->stores[x].key;
 			sibling_node->stores[x-order].value = node->stores[x].value;
+
 		} 
-		//
-		sibling_node->node_fill = order;
-		node->node_fill = order;
+
+
+
 
 
 		//Now, find the key-value to promote up as to the parent node
 		//if it is case 1, we take the last entry as the promoted KV
 		//and insert the original KV
 		if (key < middlekey_left) {
+
+
+			//TODO: need to check if it is a leaf node?
+			//transfer the second half of children nodes from node to sibling_node 
+			for (int x = order; x<= 2*order; x++) {
+				std::cout<<"transfering node:"<<node->children[x]<<"  "<<key<<std::endl;
+				sibling_node->children[x-order] = node->children[x];
+			}
+
 			int tempkey = node->stores[order-1].key;
 			int tempvalue = node->stores[order-1].value;
+			Node* tempnode = node->children[order];
 			node->node_fill = order-1;
-			insert_into_node(node, key, value);
+			insert_into_node(node, key, value, child_node);
 			key = tempkey;
-			value = tempvalue;			
-		}
+			value = tempvalue;		
+			child_node = tempnode;	
 
-		//if it is case 2, we don't have to do anything!
+		}
+		//if it is case 2, the child_node (from below) goes to the first position of 
+		//sibling_node's children. Transfer the rest of the children too
+		else {
+			sibling_node->children[0] = child_node;
+			for (int x = order+1; x<=2*order; x++) {
+				sibling_node->children[x-order] = node->children[x];				
+			}
+		}
 	}
+	//case 3
 	else {
+
+		//promoting the middle_right KV to the top
 		int tempkey = node->stores[order].key;
 		int tempvalue = node->stores[order].value;	
 
@@ -148,6 +186,7 @@ void BTree::split_node(Node* node, int key, int value){
 		int added = 0;
 		//transfer the remaining of the KV to the sibling node
 		//while inserting the original KV into the right position
+		//order+1 because the middle_right KV is promoted
 		for (int x = order+1; x< 2*order; x++)
 		{
 
@@ -155,28 +194,38 @@ void BTree::split_node(Node* node, int key, int value){
 			if (added == 0 && node->stores[x].key > key) {
 				sibling_node->stores[x-order-1 + added].key = key;
 				sibling_node->stores[x-order-1 + added].value = value;
+				sibling_node->children[x-order-1 + added] = child_node;
 				added++;				
 			}
 
 			sibling_node->stores[x-order-1 + added].key = node->stores[x].key;
 			sibling_node->stores[x-order-1 + added].value = node->stores[x].value;
-
+			sibling_node->children[x-order-1 + added] = node->children[x];
 
 		} 	
 
+		//the KV is added to the last slot of sibling_node
+		//order-1 because of the middle point
 		if (added == 0) {
 			sibling_node->stores[order-1].key = key;
-			sibling_node->stores[order-1].value = value;			
+			sibling_node->stores[order-1].value = value;	
+			sibling_node->children[order-1] = node->children[2*order];		
+			sibling_node->children[order] = child_node;	
+		}
+		else {
+			sibling_node->children[order] = node->children[2*order];				
 		}
 
-		//set sizes of node
-		sibling_node->node_fill = order;
-		node->node_fill = order;
+
 
 		key = tempkey;
 		value = tempvalue;
 	}
 
+
+	//set sizes of nodes
+	sibling_node->node_fill = order;
+	node->node_fill = order;
 
 	//INVARIANT at this point. 'key' and 'value' are the KV pairs to promote to parent
 	std::cout<<"Key Value to be promoted are:"<<key<<"  "<<value<<std::endl;
@@ -194,7 +243,7 @@ void BTree::split_node(Node* node, int key, int value){
 
 		root_node = new_root;
 
-		insert_into_node(new_root, key, value);
+		insert_into_node(new_root, key, value, nullptr);
 
 		new_root->isleaf = false;		
 		new_root->children[0] = node;
@@ -209,9 +258,17 @@ void BTree::split_node(Node* node, int key, int value){
 
 		//code adapted from insert_into_node. with addition of children pointers
 		Node* insert_node = node->parent;
-		//if the parent node is not full yet, we can add it in
-		if (insert_node->node_fill < 2*order)
+		//if the parent node is full, we split the node
+		if (insert_node->node_fill == 2*order)
 		{
+			split_node(node->parent, key, value, sibling_node);
+		}
+		else {
+			insert_into_node(insert_node, key, value, sibling_node);
+		}
+		sibling_node->parent = node->parent;
+/*
+		//insert the sibling node into the right position
 			bool childfound = 0;
 			//find the insertion point
 			for (int x =0; x<node->parent->node_fill; x++) {
@@ -236,13 +293,13 @@ void BTree::split_node(Node* node, int key, int value){
 				insert_node->children[insert_node->node_fill+1] = sibling_node;
 
 				insert_node->node_fill++;
-			
-		}
+*/			
+		//}
 
 		//if the parent node is full, we have to split the parent node too
-		else {
-			split_node(node->parent, key, value);
-		}
+		//else {
+
+		//}
 	}
 }
 
@@ -280,13 +337,15 @@ void BTree::print_all(){
 }
 
 void BTree::print_node(Node* node){
-	std::cout<<"----Node contains:"<<node->node_fill<<"----\n";
+	std::cout<<"----Node"<<node<<" contains:"<<node->node_fill<<"----\n";
 	for (int x =0; x< node->node_fill; x++) {
-		std::cout<< node->stores[x].key <<","<<node->stores[x].value<<" ";
+		std::cout<<"("<< node->stores[x].key <<","<<node->stores[x].value<<") ";
+
 	}
-	std::cout<<"\n----Node----\n";
+
 	if (!node->isleaf){
 		for (int x = 0; x< node->node_fill+1; x++) {
+			std::cout<<"\n----Node children of address:"<<node<<":"<<node->children[x]<<"----\n";
 			print_node(node->children[x]);
 		}
 	}

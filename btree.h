@@ -28,15 +28,19 @@ class BTree : public Storage {
 		//create a new node. parent is default set to nullptr
 		Node* create_node(Node*);
 
-		void insert_into_node(Node* insert_node, int key, int value);
+		void insert_into_node(Node* insert_node, int key, int value, Node* child_node);
 
 		//recursively finds the leaf node for a given key
 		Node* find_leaf(Node* insert_node, int key);
 
-		void split_node(Node* node, int key, int value);
+
+		//node: the node to be split
+		//key, value: the key value to be added to the node 
+		//sibling_node: the node that comes from the splitting of a child
+		void split_node(Node* node, int key, int value, Node* child_node);
 	public:
 
-		//Constructor. Create a sorted array with given input size
+		//Constructor.
 		BTree(int order);
 
 		void insert(int key, int value);
