@@ -305,19 +305,46 @@ void BTree::split_node(Node* node, int key, int value, Node* child_node){
 
 
 int BTree::get(int key){
+
+	//find the element in the tree. start at the root node
+	Node* node = find_leaf(root_node, key);
+
+	//scan through the node to find the element
+	for (int x = 0; x<node->node_fill; x++){
+		if (node->stores[x].key == key) {
+			return node->stores[x].value;
+		}
+	}
+
+	//if the element is not found
 	return NOT_FOUND;
 }
 
+//lazy removal. mark it as empty
 bool BTree::remove(int key){
+	update(key, NOT_FOUND);
 
 }
 
 bool BTree::update(int key, int value){
 
+	//find the element in the tree. start at the root node
+	Node* node = find_leaf(root_node, key);
+
+	//scan through the node to find the element
+	for (int x = 0; x<node->node_fill; x++){
+		if (node->stores[x].key == key) {
+			node->stores[x].value = value;
+			return 1;
+		}
+	}
+
+	//if the element is not found
+	return 0;
 }
 
 BTree::~BTree(){
-
+	delete_node(root_node);
 }
 
 BTree::Node* BTree::create_node(Node* parent){
@@ -349,4 +376,17 @@ void BTree::print_node(Node* node){
 			print_node(node->children[x]);
 		}
 	}
+}
+
+void BTree::delete_node(Node* node) {
+
+	delete[] node->stores;
+
+	if (!node->isleaf && node->node_fill > 0){
+		for (int x = 0; x< node->node_fill+1; x++) {
+			delete_node(node->children[x]);
+		}
+	}
+	delete[] node->children;
+	delete node;
 }

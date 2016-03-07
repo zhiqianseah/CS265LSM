@@ -62,8 +62,9 @@ int main(int argc, char* argv[]) {
 	
 
 
-
-
+	std::cout<<"\n";
+	std::cout<< storage2->get(17) <<"\n";
+	std::cout<< storage2->get(1) <<"\n";
 
 
 

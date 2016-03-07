@@ -33,6 +33,9 @@ class BTree : public Storage {
 		//recursively finds the leaf node for a given key
 		Node* find_leaf(Node* insert_node, int key);
 
+		//For destructor. delete the nodes in post-order traversal manner
+		void delete_node(Node* parent);
+
 
 		//node: the node to be split
 		//key, value: the key value to be added to the node 
