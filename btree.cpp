@@ -13,7 +13,7 @@ BTree::BTree(int order_input){
 
 }
 
-void BTree::insert(int key, int value){
+bool BTree::insert(int key, int value){
 
 	//node to insert our element. start at the root node
 	Node* insert_node = find_leaf(root_node, key);
@@ -37,6 +37,8 @@ void BTree::insert(int key, int value){
 	*/
 	insert_into_node(insert_node, key, value, nullptr);
 
+	//TODO: change this..?
+	return 1;
 }
 
 BTree::Node* BTree::find_leaf(Node* insert_node, int key){

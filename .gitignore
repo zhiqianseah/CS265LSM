@@ -2,3 +2,8 @@ lsm.exe
 lsm.exe.stackdump
 /oldcode
 Notebook
+btree.exe
+btree.exe.stackdump
+basic.exe
+basic.exe.stackdump
+mmap_eg.exe

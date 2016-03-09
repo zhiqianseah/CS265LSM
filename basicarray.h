@@ -1,4 +1,4 @@
-#include "storage.cpp"
+#include "storage.h"
 
 
 
@@ -7,28 +7,38 @@
 class BasicArray : public Storage {
 	private:
 
-		struct keyValue{
-			int key;
-			int value;
-		};
-		//Array where the key is stored in (x*2) and the value is stored in (x*2 + 1) for some x 
+		//Array where the keyValues are stored
 		keyValue* array;
-		int fill;
 
-		//return index of the key, or the position immediately right of it
-		int binary_search(int key);
+
+		//end of the array
+		int endarray;
+
+		//size of the file in disk (if used)
+		int filesize;
 
 	public:
 
-		//Constructor. Create a sorted array with given input size
+		//Constructor. Create a sorted array with given input size in memory
 		BasicArray(int size);
 
-		void insert(int key, int value);
+		//Constructor. Create a sorted array with given input size on disk at filepath
+		BasicArray(int size, const char* filepath);
+
+
+
+		bool insert(int key, int value);
 
 		int get(int key);
 
 		bool remove(int key);
 
 		bool update(int key, int value);
+
+		void bulkload(keyValue* input, int size) ;
+
+		void deletePage();
+
+		std::pair<keyValue*, int> transferPage();
 		~BasicArray();
 };

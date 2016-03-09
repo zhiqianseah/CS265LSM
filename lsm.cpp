@@ -1,95 +1,98 @@
 #include "basicarray.h"
 #include "btree.h"
+#include "lsm.h"
 #include <iostream> 
 #include <cstdlib>
+#include <sstream>
+#include <cmath>
 
 
+LSM::LSM(int levels_input, int* level_types, int c0_size, int ratio,  int threshold_percentage) {
 
-//Input Parameters
-//argv[1] = Size of 
-int main(int argc, char* argv[]) {
-	std::cout<<"Starting LSM\n";
+	lsm_storage = new Storage*[levels];
 
-	if (argc < 2) {
-		std::cout<<"Insufficient number of parameters. Exiting.";
-		return 0;
+	//get size of a page
+	int pagesize = getpagesize();
+	threshold = threshold_percentage; 
+	levels = levels_input;
+
+	//for now, default to basic storage for all levels
+
+	//calculate how many KV pairs can be stored in a page
+	int KV_in_page = pagesize/sizeof(keyValue) ;
+
+	//first level of LSM tree doesn't need a file path
+	lsm_storage[0] = new BasicArray(c0_size* KV_in_page);
+	for (int x =1; x< levels; x++){
+
+		//workaround for tostring due to bug in cgywin
+    	std::ostringstream ss;
+    	ss << x;
+		std::string filepath = std::string(FOLDERPATH) + "LSM"+ss.str()+".bin";
+		lsm_storage[x] = new BasicArray(c0_size*KV_in_page*pow(ratio,x), filepath.c_str());
+	}
+}
+
+bool LSM::insert(int key, int value){
+
+	bool success = lsm_storage[0]->insert(key, value);
+
+	//check if we exceed the threshold for merging
+	if (lsm_storage[0]->get_fill() > (lsm_storage[0]->get_max_size() * threshold)/ 100)
+	{
+		std::cout<<"MERGING"<<std::endl;
+
+		//identify the array starting point and size to copy to lower level
+		//this is guaranteed to be a page of data
+		std::pair <keyValue*, int> transfer = lsm_storage[0]->transferPage();
+
+		//bulkload the array to the lower level
+		lsm_storage[1]->bulkload(transfer.first, transfer.second);
+
+		//delete a page of data from C0
+		lsm_storage[0]->deletePage();
 	}
 
-/*
-	BTree b_tree(2);
-	Storage *storage2 = &b_tree;
-
-	storage2->insert(7, 8);
-	storage2->insert(1, 5);
-	storage2->insert(6, 8);
-	storage2->insert(3, 2);
-	b_tree.print_all();
-
-	storage2->insert(19,1);
-	b_tree.print_all();
-
-*/
-
-
-
-	BTree b_tree(1);
-	Storage *storage2 = &b_tree;
-
-	storage2->insert(7, 8);
-	storage2->insert(1, 5);
-	storage2->insert(6, 8);
-	storage2->insert(3, 2);
-	b_tree.print_all();
-
-	std::cout<<"splitting tree\n";
-	storage2->insert(15, 8);
-
-	storage2->insert(16, 1);
-	b_tree.print_all();
-	std::cout<<"Adding more elements\n\n";
-
-
-	//storage2->insert(2, 1);
-
-
-	//storage2->insert(8, 1);
-	//storage2->insert(9, 1);
-
-
-	storage2->insert(17,1);
-	storage2->insert(19,1);
-	b_tree.print_all();
-	
-
-
-	std::cout<<"\n";
-	std::cout<< storage2->get(17) <<"\n";
-	std::cout<< storage2->get(1) <<"\n";
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-	BasicArray SA(atoi(argv[1]));
-	Storage *storage = &SA;
-
-
-	storage->insert(1, 5);
-	storage->insert(3, 2);
-	storage->insert(6, 8);
-
-	std::cout<< storage->get(3) <<"\n";
-	std::cout<< storage->get(5) <<"\n";
-
-*/
-
-	std::cout<<"Ending LSM\n";
+	return success;
 }
+
+int LSM::get(int key) {
+
+	int curr_level = 0;
+	int result = lsm_storage[curr_level]->get(key);
+
+	//if the result is not found on the first level, try the lower levels
+	while(result == NOT_FOUND && curr_level < levels-1) {
+		curr_level++;
+		lsm_storage[curr_level]->get(key);
+	}	
+
+	return result;
+}
+
+bool LSM::remove(int key) {
+
+}
+
+bool LSM::update(int key, int value){
+
+}
+
+void LSM::bulkload(keyValue* input, int size) {
+
+}
+
+void LSM::deletePage() {
+
+}
+
+std::pair<keyValue*, int> LSM::transferPage() {
+
+}
+
+LSM::~LSM(){
+	for (int x =0; x< levels; x++){
+		delete lsm_storage[x];
+	}	
+	delete lsm_storage;
+}	

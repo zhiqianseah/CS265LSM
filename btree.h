@@ -1,13 +1,8 @@
-#include "storage.cpp"
+#include "storage.h"
 
 
 class BTree : public Storage {
 	private:
-
-		struct keyValue{
-			int key;
-			int value;
-		};
 
 		struct Node {
 			//stores of key_value pairs. max size is 2*order
@@ -20,7 +15,6 @@ class BTree : public Storage {
 			bool isleaf;
 		};
 
-		int fill;
 		int order;
 		int depth;
 		Node* root_node;
@@ -46,7 +40,7 @@ class BTree : public Storage {
 		//Constructor.
 		BTree(int order);
 
-		void insert(int key, int value);
+		bool insert(int key, int value);
 
 		int get(int key);
 
