@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	leveltypes[0] = 0;
 	leveltypes[1] = 0;
 
-	LSM lsm(2, leveltypes, 3, 5, 80);
+	LSM lsm(2, leveltypes, 3, 5, 100);
 	Storage *storage = &lsm;
 
 
@@ -38,9 +38,11 @@ int main(int argc, char* argv[]) {
 	//this should return 1
 	std::cout<< "Starting mass input\n";	
 
-	for (int x = 0; x<(24577* 80)/100+1; x++) {
+	for (int x = 0; x<(24577* 100)/100+1; x++) {
 		storage->insert(x, x);
 	}
+
+	std::cout<< storage->get(1) <<"\n";
 
 	std::cout<<"Ending LSM\n";	
 }

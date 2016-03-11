@@ -8,6 +8,7 @@ BasicArray::BasicArray(int size) {
 	fill = 0;
 	endarray = 0;
 	max_size = size;
+	rolling_merge_index = 0;
 }
 
 BasicArray::BasicArray(int size, const char* filepath) {
@@ -15,7 +16,7 @@ BasicArray::BasicArray(int size, const char* filepath) {
 	fill = 0;
 	endarray = 0;
 	max_size = size;
-
+	rolling_merge_index = 0;
 
     int result;
     filesize = size*sizeof(keyValue);
@@ -77,6 +78,9 @@ bool BasicArray::insert(int key, int value) {
 		array[hole].value = value;
 	}
 	else {
+
+		//if the array is maxed out. The check is only done here because
+		//a duplicate key may be inserted
 		if (max_size == endarray) {
 			return 0;
 		}
@@ -123,24 +127,38 @@ bool BasicArray::update(int key, int value){
 
 void BasicArray::bulkload(keyValue* input, int size){
 	for (int x = 0; x<size; x++) {
-		insert(input[x].key, input[x].value);
+		if (input[x].key != NOT_FOUND) {
+			insert(input[x].key, input[x].value);
+		}
 	}
 } 
 
 
 std::pair<keyValue*, int> BasicArray::transferPage(){
 	std::pair <keyValue*, int> output;
-	output.first = array;
-	output.second = getpagesize()/sizeof(keyValue);
+
+	int transfersize = getpagesize()/sizeof(keyValue);
+	output.first = &array[transfersize*rolling_merge_index];
+	output.second = transfersize;
+
+	std::cout<<"moving from:"<<array[transfersize*rolling_merge_index].key<<"onwards\n";
+	//move the rolling merge index to the next page
+	//so that the next transfer will be the next page
+
+
+	if (rolling_merge_index == max_size/transfersize) {
+		rolling_merge_index = 0;
+	}
 	return output;
 }
 
 void BasicArray::deletePage() {
 
 	int deletesize = getpagesize()/sizeof(keyValue);
-	for (int x =0; x< deletesize; x++) {
+	for (int x =deletesize*rolling_merge_index; x< deletesize; x++) {
 		array[x].value = NOT_FOUND;
 	}
+	rolling_merge_index++;
 	fill = fill - deletesize;
 }
 

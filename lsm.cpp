@@ -1,4 +1,5 @@
 #include "basicarray.h"
+#include "sortedarray.h"
 #include "btree.h"
 #include "lsm.h"
 #include <iostream> 
@@ -22,23 +23,23 @@ LSM::LSM(int levels_input, int* level_types, int c0_size, int ratio,  int thresh
 	int KV_in_page = pagesize/sizeof(keyValue) ;
 
 	//first level of LSM tree doesn't need a file path
-	lsm_storage[0] = new BasicArray(c0_size* KV_in_page);
+	lsm_storage[0] = new SortedArray(c0_size* KV_in_page);
 	for (int x =1; x< levels; x++){
 
 		//workaround for tostring due to bug in cgywin
     	std::ostringstream ss;
     	ss << x;
 		std::string filepath = std::string(FOLDERPATH) + "LSM"+ss.str()+".bin";
-		lsm_storage[x] = new BasicArray(c0_size*KV_in_page*pow(ratio,x), filepath.c_str());
+		lsm_storage[x] = new SortedArray(c0_size*KV_in_page*pow(ratio,x), filepath.c_str());
 	}
 }
 
-bool LSM::insert(int key, int value){
+bool LSM::insert(int key, int value){ 
 
 	bool success = lsm_storage[0]->insert(key, value);
 
 	//check if we exceed the threshold for merging
-	if (lsm_storage[0]->get_fill() > (lsm_storage[0]->get_max_size() * threshold)/ 100)
+	if (lsm_storage[0]->get_fill() >= (lsm_storage[0]->get_max_size() * threshold)/ 100)
 	{
 		std::cout<<"MERGING"<<std::endl;
 
@@ -63,8 +64,9 @@ int LSM::get(int key) {
 
 	//if the result is not found on the first level, try the lower levels
 	while(result == NOT_FOUND && curr_level < levels-1) {
+		std::cout<<"reading from lower levels\n";
 		curr_level++;
-		lsm_storage[curr_level]->get(key);
+		result = lsm_storage[curr_level]->get(key);
 	}	
 
 	return result;

@@ -1,11 +1,16 @@
+#ifndef BASICARRAY_H
+#define BASICARRAY_H
+
 #include "storage.h"
 
-
+//A basic unsorted array, where keys are guaranteed to be unique
+//insertion is done by scanning first to see if it exist in the array
+//deletion is done lazily by finding the element and marking it as NOT_FOUND
 
 #include <iostream>
 
 class BasicArray : public Storage {
-	private:
+	protected:
 
 		//Array where the keyValues are stored
 		keyValue* array;
@@ -16,6 +21,9 @@ class BasicArray : public Storage {
 
 		//size of the file in disk (if used)
 		int filesize;
+
+		//current page index for the rolling merges
+		int rolling_merge_index;
 
 	public:
 
@@ -42,3 +50,6 @@ class BasicArray : public Storage {
 		std::pair<keyValue*, int> transferPage();
 		~BasicArray();
 };
+
+
+#endif

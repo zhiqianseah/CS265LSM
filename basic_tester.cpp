@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 	Storage *storage = &SA;
  
 
-	storage->insert(1, 5);
+	storage->insert(8192, 8191);
 	storage->insert(3, 2);
 	storage->insert(6, 8);
 
