@@ -48,6 +48,12 @@ class BasicArray : public Storage {
 		void deletePage();
 
 		std::pair<keyValue*, int> transferPage();
+
+		std::pair<keyValue*, int> transferAll();
+
+		void deleteAll();
+
+
 		~BasicArray();
 };
 

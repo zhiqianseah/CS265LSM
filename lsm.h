@@ -3,13 +3,20 @@
 
 class LSM : public Storage {
 	private:
-		Storage** lsm_storage;
+		Storage*** lsm_storage;
 
-		//Threshold of a LSM level before rolling merge. between 0 and 1
-		int threshold;
+		//total number of levels in the LSM
 		int levels;
 
+		//ratio of sizes between levels
+		int ratio;
 
+
+		//current fill up to which level
+		int curr_fill_level;
+
+		//current fill up to which index
+		int* curr_fill_index_per_level;
 	public:
 
 		/*Constructor.
@@ -19,7 +26,7 @@ class LSM : public Storage {
 			ratio: the size ratio of each level
 
 		*/
-		LSM(int levels, int* level_types, int c0_size, int ratio, int threshold_percentage);
+		LSM(int levels, int* level_types, int c0_size, int ratio);
 
 		bool insert(int key, int value);
 
@@ -35,5 +42,10 @@ class LSM : public Storage {
 
 		void deletePage();
 		
+		std::pair<keyValue*, int> transferAll();
+
+		void deleteAll();
+
+
 		~LSM();	
 };

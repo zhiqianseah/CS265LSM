@@ -5,7 +5,11 @@
 BasicArray::BasicArray(int size) {
 	std::cout<<"creating array of size "<< size<<"\n";
 	array = new keyValue[size];
+
+	//number of valid entries in the array
 	fill = 0;
+
+	//end of the valid array. there may be holes, so fill != endarray
 	endarray = 0;
 	max_size = size;
 	rolling_merge_index = 0;
@@ -141,7 +145,7 @@ std::pair<keyValue*, int> BasicArray::transferPage(){
 	output.first = &array[transfersize*rolling_merge_index];
 	output.second = transfersize;
 
-	std::cout<<"moving from:"<<array[transfersize*rolling_merge_index].key<<"onwards\n";
+	std::cout<<"moving "<< transfersize<<" from:"<<array[transfersize*rolling_merge_index].key<<"onwards\n";
 	//move the rolling merge index to the next page
 	//so that the next transfer will be the next page
 
@@ -149,6 +153,17 @@ std::pair<keyValue*, int> BasicArray::transferPage(){
 	if (rolling_merge_index == max_size/transfersize) {
 		rolling_merge_index = 0;
 	}
+	return output;
+}
+
+std::pair<keyValue*, int> BasicArray::transferAll(){
+	std::pair <keyValue*, int> output;
+
+	int transfersize = fill;
+	output.first = array;
+	output.second = transfersize;
+
+	std::cout<<"moving "<< transfersize<<" from:"<<array[0].key<<"onwards\n";
 	return output;
 }
 
@@ -160,6 +175,11 @@ void BasicArray::deletePage() {
 	}
 	rolling_merge_index++;
 	fill = fill - deletesize;
+}
+
+void BasicArray::deleteAll() {
+	fill = 0;
+	endarray = 0;
 }
 
 BasicArray::~BasicArray(){

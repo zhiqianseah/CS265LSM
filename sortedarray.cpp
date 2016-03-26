@@ -17,7 +17,8 @@ int SortedArray::find_position(int key) {
 		}
 		middle = (first+last)/2;
 	}
-	if (array[middle].key < key && middle < fill){
+
+	if (array[middle].key < key && middle+1 < fill){
 		return middle+1;
 	}
 	else{
@@ -95,6 +96,14 @@ bool SortedArray::remove(int key){
 
 void SortedArray::bulkload(keyValue* input, int size){
 
+	for (int x = 0; x< size; x++)
+	{
+		array[x].key = input[x].key;
+		array[x].value = input[x].value;
+	}
+
+	fill = size;
+/*
 	//find the left and right boundaries that exist in the current array
 	int leftpos = find_position(input[0].key);
 	int rightpos = find_position(input[size-1].key);
@@ -145,6 +154,8 @@ void SortedArray::bulkload(keyValue* input, int size){
 	}
 	//end algo to merge 2 sorted array----
 
+*/
+
 	//sanity check
 	/*
 	for (int x = 0; x< k; x++){
@@ -154,6 +165,8 @@ void SortedArray::bulkload(keyValue* input, int size){
 	std::cout<<"Number of new elements:"<<newelements<<std::endl;
 	*/
 
+
+/*
 	//make sure we don't overflow the array
 	if (fill+newelements <= max_size)
 	{
