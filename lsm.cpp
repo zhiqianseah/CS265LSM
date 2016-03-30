@@ -109,14 +109,13 @@ bool LSM::insert(int key, int value){
 //merge level with the level below it
 void LSM::merge(int level) {
 
-	//std::pair <keyValue*, int> transfer = lsm_storage[level][0]->transferAll();
 
 	if (curr_fill_index_per_level[level+1] == ratio)
 	{
 		std::cout<<"merging lower level"<<std::endl;
 		//return;
 		merge(level+1);
-		curr_fill_index_per_level[level+1] = 0;
+
 	}
 
 
@@ -139,27 +138,42 @@ void LSM::merge(int level) {
 	}
 
 	//bulkload the array to the lower level
-	//lsm_storage[level+1][curr_fill_index_per_level[level+1]]->bulkload(transfer.first, transfer.second);
-
 	lsm_storage[level+1][curr_fill_index_per_level[level+1]]->bulkload(all_lists, num_lists);
 
 
-	//if (curr_fill_index_per_level[level+1] == 0) {
-	if (curr_fill_level < level +1) {
-		curr_fill_level++;
-	}
-
-	curr_fill_index_per_level[level+1]++;
-	std::cout<<curr_fill_index_per_level[level+1]<<"<--- curr fill\n";
-
-
-	//get the list of sorted arrays from each entry in the current level
+	//delete all entries in current level
 	for (int x = 0; x< num_lists; x++){
 		lsm_storage[level][x]->deleteAll();
 	}
 
 
+	//get number of new elements added in next level
+	int new_fill = lsm_storage[level+1][curr_fill_index_per_level[level+1]]->get_fill();
+	int prev_level_max_size = lsm_storage[level][0]->get_max_size();
 
+
+	std::cout<<"new_fill: "<<new_fill<<". prev_level:"<<prev_level_max_size<<"\n";
+
+	//if all the new entries can fit in the previous level, transfer it back.
+	if (new_fill <= prev_level_max_size && level != 0)
+	{
+		std::pair <keyValue*, int> temp[1];
+		temp[0] = lsm_storage[level+1][curr_fill_index_per_level[level+1]]->transferAll();
+		std::cout<<"Special case, transferring back after merging...\n";
+		lsm_storage[level][0]->bulkload(temp, 1);
+		curr_fill_index_per_level[level] = 1;		
+
+	}
+	else {
+
+		if (curr_fill_level < level +1) {
+			curr_fill_level++;
+		}
+		curr_fill_index_per_level[level] = 0;
+		curr_fill_index_per_level[level+1]++;
+		std::cout<<curr_fill_index_per_level[level+1]<<"<--- curr fill\n";
+
+	}
 
 }
 

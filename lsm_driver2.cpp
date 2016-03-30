@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 	std::cout<< storage->get(1) <<"\n";
 
 	for (int x = 0; x<num_inputs+1; x++) {
-		storage->insert(x, x+2);
+		storage->insert(x, NOT_FOUND);
 	}
 	std::cout<< storage->get(1) <<"\n";
 

@@ -86,10 +86,14 @@ int heap_merge_k_list::merge(keyValue* dest, int max_size){
 
 	int added_keys = 0;
 	int counter = 0;
+
+	int deleted_key = NOT_FOUND;
 	for (int x = 0; x<total_keys; x++)
 	{
 		HeapNode min_node = get_min();
 	
+
+	/* TESTING code
 		if (x < 5) {
 			for (int y = 0; y< size; y++)
 			{
@@ -97,17 +101,24 @@ int heap_merge_k_list::merge(keyValue* dest, int max_size){
 			}	
 			std::cout<<"    is the heap. min node is:"<<min_node.KV.key<<"\n";		
 		}
-
+	*/
 		//Check if duplicate keys
-		if (x > 0 && dest[added_keys-1].key == min_node.KV.key) {
+		if (x > 0 && ((dest[added_keys-1].key == min_node.KV.key)
+		|| (deleted_key == min_node.KV.key))) {
 			//INVARIANT that the minheap will return nodes from latter k_list first
 			//therefore, we don't have to do anything here.
 		}
 		else
 		{
-			dest[added_keys].key = min_node.KV.key;
-			dest[added_keys].value = min_node.KV.value; 
-			added_keys++;
+			//if the key has been deleted, save it somewhere
+			if (min_node.KV.value == NOT_FOUND) {
+				deleted_key = min_node.KV.key; 
+			}
+			else {
+				dest[added_keys].key = min_node.KV.key;
+				dest[added_keys].value = min_node.KV.value; 
+				added_keys++;
+			}
 		}
 
 		//Get the next entry from the list where min_node comes from
