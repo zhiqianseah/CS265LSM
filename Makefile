@@ -6,6 +6,13 @@ lsm: lsm_driver.cpp lsm.h lsm.cpp basicarray.cpp basicarray.h storage.h btree.cp
 lsmtest:
 	./lsm.exe
 
+lsm2: lsm_driver2.cpp lsm.h lsm.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp
+	g++ $(CPPFLAGS) lsm_driver2.cpp lsm.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp -o lsm2.exe
+
+lsmtest2:
+	./lsm2.exe
+
+
 basic: basicarray.cpp storage.h btree.cpp basic_tester.cpp
 	g++ $(CPPFLAGS) basic_tester.cpp basicarray.cpp storage.h btree.cpp -o basic.exe
 

@@ -174,15 +174,18 @@ int LSM::get(int key) {
 
 		get_level++;
 		std::cout<<"reading from level:"<<get_level<<"\n";
-		get_level_index = 0;
-		while(get_level_index < curr_fill_index_per_level[get_level]) {
+
+		//run the array at a level backwards, because the array at the end
+		//are more recent
+		get_level_index = curr_fill_index_per_level[get_level]-1;
+		while(get_level_index >= 0) {
 			result = lsm_storage[get_level][get_level_index]->get(key);
 
 			if (result != NOT_FOUND)
 			{
 				break;
 			}
-			get_level_index++;
+			get_level_index--;
 		}
 	}	
 
