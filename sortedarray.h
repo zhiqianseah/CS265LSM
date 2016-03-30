@@ -1,5 +1,5 @@
 #include "basicarray.h"
-
+#include "heap_merge_k_list.h"
 #include <iostream>
 
 class SortedArray : public BasicArray {
@@ -20,6 +20,6 @@ class SortedArray : public BasicArray {
 		int get(int key);
 		void print_all();
 
-		void bulkload(keyValue* input, int size);
+		void bulkload(std::pair<keyValue*, int>* k_lists, int k);
 
 };

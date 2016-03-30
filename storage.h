@@ -8,10 +8,10 @@
 #include <stdlib.h>  //for exit
 #include <sys/mman.h> //for mmap
 #include <utility>    //for pair
+#include <limits.h>
 
 //constant that is used when the element is not found
 #define NOT_FOUND -2147483648
-
 //folder for on-disk storage
 #define FOLDERPATH "C:/tmp/"
 
@@ -53,7 +53,7 @@ class Storage {
 		virtual bool update(int key, int value) = 0;
 
 		//load an array of KeyValues into the storage 
-		virtual void bulkload(keyValue* input, int size) = 0;
+		virtual void bulkload(std::pair<keyValue*, int>* k_lists, int k) = 0;
 
 		//transfer a page of keyvalue pairs out
 		//returns a pointer to the start of the keyvalue store, and an int for the number of KV pairs to transfer

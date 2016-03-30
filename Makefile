@@ -1,7 +1,7 @@
 CPPFLAGS = -std=c++11 -g
 
-lsm: lsm_driver.cpp lsm.h lsm.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp
-	g++ $(CPPFLAGS) lsm_driver.cpp lsm.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp -o lsm.exe
+lsm: lsm_driver.cpp lsm.h lsm.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp
+	g++ $(CPPFLAGS) lsm_driver.cpp lsm.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp -o lsm.exe
 
 lsmtest:
 	./lsm.exe

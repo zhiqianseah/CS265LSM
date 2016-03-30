@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
 	leveltypes[1] = 0;
 
 	std::cout<<"Starting LSM\n";
-	LSM lsm(2, leveltypes, 3, 5);
+	LSM lsm(3, leveltypes, 3, 3);
 	Storage *storage = &lsm;
 
 	std::cout<<"Starting test\n";
@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
 
 
 
-	for (int x = 0; x<num_inputs; x++) {
+	for (int x = 0; x<num_inputs+1; x++) {
 		storage->insert(x, x);
 	}
 

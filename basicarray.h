@@ -43,7 +43,7 @@ class BasicArray : public Storage {
 
 		bool update(int key, int value);
 
-		void bulkload(keyValue* input, int size) ;
+		void bulkload(std::pair<keyValue*, int>* k_lists, int k) ;
 
 		void deletePage();
 

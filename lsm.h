@@ -36,7 +36,7 @@ class LSM : public Storage {
 
 		bool update(int key, int value);
 
-		void bulkload(keyValue* input, int size);
+		void bulkload(std::pair<keyValue*, int>* k_lists, int k);
 
 		std::pair<keyValue*, int> transferPage();
 
@@ -46,6 +46,9 @@ class LSM : public Storage {
 
 		void deleteAll();
 
+
+		//recursive algorithm to merge level with the level below
+		void merge(int level);
 
 		~LSM();	
 };

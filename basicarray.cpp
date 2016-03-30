@@ -129,11 +129,18 @@ bool BasicArray::update(int key, int value){
 	return 0;	
 }
 
-void BasicArray::bulkload(keyValue* input, int size){
-	for (int x = 0; x<size; x++) {
-		if (input[x].key != NOT_FOUND) {
-			insert(input[x].key, input[x].value);
+void BasicArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
+	if (k == 1){
+		keyValue* input = k_lists[0].first;
+		int size = k_lists[0].second; 
+		for (int x = 0; x<size; x++) {
+			if (input[x].key != NOT_FOUND) {
+				insert(input[x].key, input[x].value);
+			}
 		}
+	}
+	else {
+		std::cout<<"NOT IMPLEMENTED\n";
 	}
 } 
 

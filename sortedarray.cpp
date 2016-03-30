@@ -18,8 +18,16 @@ int SortedArray::find_position(int key) {
 		middle = (first+last)/2;
 	}
 
-	if (array[middle].key < key && middle+1 < fill){
-		return middle+1;
+	//std::cout<<"middle"<<middle<<" fill"<<fill <<"\n";
+
+	if (array[middle].key < key && middle < fill){
+		if (fill != max_size){
+			return middle+1;
+		}
+		else {
+			return middle;
+		}
+
 	}
 	else{
 		return middle;
@@ -31,11 +39,12 @@ bool SortedArray::insert(int key, int value) {
 
 
 	int pos = find_position(key);
-	//std::cout<<"inserting "<<key<<" into "<<pos<<" is the insert position\n";
+	//std::cout<<"inserting "<<key<<" into "<<pos<<" is the insert position. fill is:"<<fill<<"\n";
 
 
 	//if array is full, return 0
 	if (fill == max_size && array[pos].key != key){
+		//print_all();
 		return 0;
 	}
 	//check if the key already exists
@@ -59,7 +68,7 @@ bool SortedArray::insert(int key, int value) {
 
 	}
 
-
+	//print_all();
 	return 1;
 }
 
@@ -91,18 +100,26 @@ bool SortedArray::remove(int key){
 			array[x].value = array[x+1].value;
 		}
 	}
-
+	return 1;
 }
 
-void SortedArray::bulkload(keyValue* input, int size){
+void SortedArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
+	if (k == 1){
+		keyValue* input = k_lists[0].first;
+		int size = k_lists[0].second;
+		for (int x = 0; x< size; x++)
+		{
+			array[x].key = input[x].key;
+			array[x].value = input[x].value;
+		}
 
-	for (int x = 0; x< size; x++)
-	{
-		array[x].key = input[x].key;
-		array[x].value = input[x].value;
+		fill = size;
 	}
+	else {
 
-	fill = size;
+		heap_merge_k_list heapmerge = heap_merge_k_list(k_lists, k);
+		fill = heapmerge.merge(array, max_size);
+	}
 /*
 	//find the left and right boundaries that exist in the current array
 	int leftpos = find_position(input[0].key);
@@ -197,7 +214,7 @@ void SortedArray::bulkload(keyValue* input, int size){
 void SortedArray::print_all(){
 	std::cout<<"---------printing current array----------\n";
 	for (int x =0; x< fill; x++){
-		std::cout<<array[x].key<<" "<<array[x].value<<"\n";
+		std::cout<<array[x].key<<","<<array[x].value<<" ";
 	}
 	std::cout<<"---------END printing current array-----------\n";
 }

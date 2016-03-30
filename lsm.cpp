@@ -83,25 +83,9 @@ bool LSM::insert(int key, int value){
 	//if the top level c0 is full, we have to merge it down first
 	if (success == false)
 	{
-		std::cout<<"MERGING"<<std::endl;
+		std::cout<<"MERGING when input key is"<<key<<std::endl;
 
-		
-		std::pair <keyValue*, int> transfer = lsm_storage[0][0]->transferAll();
-
-		//bulkload the array to the lower level
-		lsm_storage[1][curr_fill_index_per_level[1]]->bulkload(transfer.first, transfer.second);
-
-		curr_fill_index_per_level[1]++;
-		if (curr_fill_index_per_level[1] == ratio)
-		{
-			std::cout<<"LSM IS FULL"<<std::endl;
-			return false;
-		}
-
-		lsm_storage[0][0]->deleteAll();
-
-
-		bool success = lsm_storage[0][0]->insert(key, value);
+		merge(0);
 
 		//identify the array starting point and size to copy to lower level
 		//this is guaranteed to be a page of data
@@ -112,24 +96,87 @@ bool LSM::insert(int key, int value){
 
 		//delete a page of data from C0
 		//lsm_storage[0]->deletePage();
+
+		//try again
+		success = lsm_storage[0][0]->insert(key, value);	
 	}
+
+
 
 	return success;
 }
 
+//merge level with the level below it
+void LSM::merge(int level) {
+
+	//std::pair <keyValue*, int> transfer = lsm_storage[level][0]->transferAll();
+
+	if (curr_fill_index_per_level[level+1] == ratio)
+	{
+		std::cout<<"merging lower level"<<std::endl;
+		//return;
+		merge(level+1);
+		curr_fill_index_per_level[level+1] = 0;
+	}
+
+
+	int num_lists;
+
+	//only the first level has 1 list. subsequent levels has 'ratio' lists
+	if (level == 0){
+		num_lists = 1;
+	}
+	else{
+		num_lists = ratio;
+	}
+
+	std::pair <keyValue*, int> all_lists[num_lists];
+
+
+	//get the list of sorted arrays from each entry in the current level
+	for (int x = 0; x< num_lists; x++){
+		all_lists[x] = lsm_storage[level][x]->transferAll();
+	}
+
+	//bulkload the array to the lower level
+	//lsm_storage[level+1][curr_fill_index_per_level[level+1]]->bulkload(transfer.first, transfer.second);
+
+	lsm_storage[level+1][curr_fill_index_per_level[level+1]]->bulkload(all_lists, num_lists);
+
+
+	//if (curr_fill_index_per_level[level+1] == 0) {
+	if (curr_fill_level < level +1) {
+		curr_fill_level++;
+	}
+
+	curr_fill_index_per_level[level+1]++;
+	std::cout<<curr_fill_index_per_level[level+1]<<"<--- curr fill\n";
+
+
+	//get the list of sorted arrays from each entry in the current level
+	for (int x = 0; x< num_lists; x++){
+		lsm_storage[level][x]->deleteAll();
+	}
+
+
+
+
+}
+
 int LSM::get(int key) {
 
-	int curr_level = 0;
+	int get_level = 0;
 	int get_level_index = 0;
-	int result = lsm_storage[curr_level][get_level_index]->get(key);
+	int result = lsm_storage[get_level][get_level_index]->get(key);
 
 	//if the result is not found on the first level, try the lower levels
-	while(result == NOT_FOUND && curr_level < levels-1) {
-		std::cout<<"reading from lower levels\n";
-		curr_level++;
+	while(result == NOT_FOUND && get_level < curr_fill_level) {
+
+		get_level++;
+		std::cout<<"reading from level:"<<get_level<<"\n";
 		get_level_index = 0;
-		while(get_level_index < curr_fill_index_per_level[curr_level]) {
-			result = lsm_storage[curr_level][get_level_index]->get(key);
+		while(get_level_index < curr_fill_index_per_level[get_level]) {
+			result = lsm_storage[get_level][get_level_index]->get(key);
 
 			if (result != NOT_FOUND)
 			{
@@ -145,13 +192,15 @@ int LSM::get(int key) {
 
 bool LSM::remove(int key) {
 
+	std::cout<<"NOT IMPLEMENTED\n";
+	return 0;
 }
 
 bool LSM::update(int key, int value){
 
 }
 
-void LSM::bulkload(keyValue* input, int size) {
+void LSM::bulkload(std::pair<keyValue*, int>* k_lists, int k) {
 
 }
 
