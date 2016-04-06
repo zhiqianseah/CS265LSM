@@ -10,9 +10,10 @@
 int main(int argc, char* argv[]) {
 
 
-	int leveltypes[2];
-	leveltypes[0] = 0;
-	leveltypes[1] = 0;
+	int leveltypes[3];
+	leveltypes[0] = 1;
+	leveltypes[1] = 2;
+	leveltypes[2] = 2;
 
 	std::cout<<"Starting LSM\n";
 	LSM lsm(3, leveltypes, 3, 3);

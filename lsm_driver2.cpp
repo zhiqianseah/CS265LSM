@@ -10,9 +10,10 @@
 int main(int argc, char* argv[]) {
 
 
-	int leveltypes[2];
-	leveltypes[0] = 0;
-	leveltypes[1] = 0;
+	int leveltypes[3];
+	leveltypes[0] = 1;
+	leveltypes[1] = 2;
+	leveltypes[2] = 2;
 
 	std::cout<<"Starting LSM\n";
 	LSM lsm(3, leveltypes, 3, 3);
@@ -29,10 +30,10 @@ int main(int argc, char* argv[]) {
 	std::cout<< storage->get(5) <<"\n";
 
 	//this should return 0
-	std::cout<< storage->insert(9, 10) <<"\n";	
+	std::cout<<"inserting (9,10):"<< storage->insert(9, 10) <<"\n";	
 
 	//remove 1 element to clear up space
-	std::cout<< storage->remove(3) <<"\n";	
+	std::cout<<"removing 3:"<< storage->remove(3) <<"\n";	
 
 
 	std::cout<< storage->insert(9, 10) <<"\n";	

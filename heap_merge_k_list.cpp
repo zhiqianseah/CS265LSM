@@ -80,14 +80,15 @@ heap_merge_k_list::heap_merge_k_list(std::pair<keyValue*, int>* k_lists, int k) 
 
 
 
-int heap_merge_k_list::merge(keyValue* dest, int max_size){
+int heap_merge_k_list::merge(keyValue* dest, int max_size, int* index){
 
 	std::cout<<"total keys are:"<<total_keys<<"\n";
 
 	int added_keys = 0;
-	int counter = 0;
 
 	int deleted_key = NOT_FOUND;
+
+	int pagesize = getpagesize();
 	for (int x = 0; x<total_keys; x++)
 	{
 		HeapNode min_node = get_min();
@@ -102,7 +103,7 @@ int heap_merge_k_list::merge(keyValue* dest, int max_size){
 			std::cout<<"    is the heap. min node is:"<<min_node.KV.key<<"\n";		
 		}
 	*/
-		//Check if duplicate keys
+		//Check if duplicate keys or deleted keys
 		if (x > 0 && ((dest[added_keys-1].key == min_node.KV.key)
 		|| (deleted_key == min_node.KV.key))) {
 			//INVARIANT that the minheap will return nodes from latter k_list first
@@ -110,14 +111,25 @@ int heap_merge_k_list::merge(keyValue* dest, int max_size){
 		}
 		else
 		{
-			//if the key has been deleted, save it somewhere
+			//if the key has been deleted, save it somewhere for future comparisons
 			if (min_node.KV.value == NOT_FOUND) {
 				deleted_key = min_node.KV.key; 
 			}
 			else {
 				dest[added_keys].key = min_node.KV.key;
 				dest[added_keys].value = min_node.KV.value; 
+
+				if (index != nullptr && added_keys%(pagesize/sizeof(keyValue)) == 0)
+				{
+					int input_index = added_keys/(pagesize/sizeof(keyValue));
+					index[input_index] = dest[added_keys].key;
+					std::cout<<"(heap merge) inserting index of:"<<index[input_index]<<" at "<<input_index<<"\n";
+				}
+
 				added_keys++;
+
+
+
 			}
 		}
 
@@ -138,11 +150,15 @@ int heap_merge_k_list::merge(keyValue* dest, int max_size){
 	std::cout<<"Total added keys are:"<<added_keys<<"\n";
 
 
+	//TESTING CODE
+	/*
 	for (int x = 0; x< 10; x++)
 	{
 		std::cout<<dest[x].key<<" ";
 	}
 	std::cout<<"\n";
+	*/
+
 	return added_keys;
 }
 

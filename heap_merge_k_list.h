@@ -2,9 +2,12 @@
 //Uses a merge sort with a heap.
 //the heap is indexed by positions in the HeapNode array
 //idea taken from http://www.geeksforgeeks.org/merge-k-sorted-arrays/
+#ifndef HEAPMERGE_H
+#define HEAPMERGE_H
+
 #include "storage.h"
 #include <iostream>
-
+#include <cstdlib>
 struct HeapNode {
 	keyValue KV; 					//current key-value pair
 	int sorted_list;				//which sorted list it belongs to
@@ -40,12 +43,16 @@ class heap_merge_k_list {
 
 		//constructor. takes in an array of (KV pointers, length), and an int
 		//for number of arrays
-		heap_merge_k_list(std::pair<keyValue*, int>* k_lists, int k);
+		heap_merge_k_list(std::pair<keyValue*, int>* k_lists, int k );
 
 
-		//
-		int merge(keyValue* dest, int max_size);
+		//dest is the memory address to write the merged KVs to
+		//max_size is the maximum size of the dest addr
+		//index is the location to store indexes to the KV. NULL if not applicable.
+		int merge(keyValue* dest, int max_size, int* index);
 
 		~heap_merge_k_list();
 
 };
+
+#endif

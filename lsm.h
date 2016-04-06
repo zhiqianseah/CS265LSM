@@ -38,9 +38,6 @@ class LSM : public Storage {
 
 		void bulkload(std::pair<keyValue*, int>* k_lists, int k);
 
-		std::pair<keyValue*, int> transferPage();
-
-		void deletePage();
 		
 		std::pair<keyValue*, int> transferAll();
 

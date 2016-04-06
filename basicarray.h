@@ -22,8 +22,6 @@ class BasicArray : public Storage {
 		//size of the file in disk (if used)
 		int filesize;
 
-		//current page index for the rolling merges
-		int rolling_merge_index;
 
 	public:
 
@@ -44,10 +42,6 @@ class BasicArray : public Storage {
 		bool update(int key, int value);
 
 		void bulkload(std::pair<keyValue*, int>* k_lists, int k) ;
-
-		void deletePage();
-
-		std::pair<keyValue*, int> transferPage();
 
 		std::pair<keyValue*, int> transferAll();
 

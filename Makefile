@@ -1,13 +1,13 @@
 CPPFLAGS = -std=c++11 -g
 
-lsm: lsm_driver.cpp lsm.h lsm.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp
-	g++ $(CPPFLAGS) lsm_driver.cpp lsm.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp -o lsm.exe
+lsm: lsm_driver.cpp lsm.h lsm.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp
+	g++ $(CPPFLAGS) lsm_driver.cpp lsm.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm.exe
 
 lsmtest:
 	./lsm.exe
 
-lsm2: lsm_driver2.cpp lsm.h lsm.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp
-	g++ $(CPPFLAGS) lsm_driver2.cpp lsm.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp -o lsm2.exe
+lsm2: lsm_driver2.cpp lsm.h lsm.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp
+	g++ $(CPPFLAGS) lsm_driver2.cpp lsm.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm2.exe
 
 lsmtest2:
 	./lsm2.exe
@@ -33,3 +33,10 @@ btree: btree_test.cpp basicarray.cpp storage.h btree.cpp
 
 btreetest:
 	./btree.exe 100
+
+indexedarray: indexedarray_tester.cpp storage.h indexedarray.cpp heap_merge_k_list.cpp
+	g++ $(CPPFLAGS) indexedarray_tester.cpp storage.h indexedarray.cpp heap_merge_k_list.cpp -o indexedarray.exe
+
+
+indexedarraytest:
+	./indexedarray.exe 100

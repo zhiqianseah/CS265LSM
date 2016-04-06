@@ -12,19 +12,16 @@ BasicArray::BasicArray(int size) {
 	//end of the valid array. there may be holes, so fill != endarray
 	endarray = 0;
 	max_size = size;
-	rolling_merge_index = 0;
 }
 
 BasicArray::BasicArray(int size, const char* filepath) {
-	std::cout<<"creating array of size "<< size<< " at "<< filepath<<"\n";
 	fill = 0;
 	endarray = 0;
 	max_size = size;
-	rolling_merge_index = 0;
 
     int result;
     filesize = size*sizeof(keyValue);
-
+	std::cout<<"creating array of size "<< size<< " at "<< filepath<<" with filesize"<<filesize<<"\n";
 	//open file at filepath. create it if necessary
 	fd = open(filepath, O_RDWR | O_CREAT);
     if (fd == -1) {
@@ -133,6 +130,12 @@ void BasicArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
 	if (k == 1){
 		keyValue* input = k_lists[0].first;
 		int size = k_lists[0].second; 
+
+		if (size > max_size){
+			std::cout<<"Error. Array is not large enough\n";
+			return;
+		}
+
 		for (int x = 0; x<size; x++) {
 			if (input[x].key != NOT_FOUND) {
 				insert(input[x].key, input[x].value);
@@ -145,23 +148,6 @@ void BasicArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
 } 
 
 
-std::pair<keyValue*, int> BasicArray::transferPage(){
-	std::pair <keyValue*, int> output;
-
-	int transfersize = getpagesize()/sizeof(keyValue);
-	output.first = &array[transfersize*rolling_merge_index];
-	output.second = transfersize;
-
-	std::cout<<"moving "<< transfersize<<" from:"<<array[transfersize*rolling_merge_index].key<<"onwards\n";
-	//move the rolling merge index to the next page
-	//so that the next transfer will be the next page
-
-
-	if (rolling_merge_index == max_size/transfersize) {
-		rolling_merge_index = 0;
-	}
-	return output;
-}
 
 std::pair<keyValue*, int> BasicArray::transferAll(){
 	std::pair <keyValue*, int> output;
@@ -174,15 +160,6 @@ std::pair<keyValue*, int> BasicArray::transferAll(){
 	return output;
 }
 
-void BasicArray::deletePage() {
-
-	int deletesize = getpagesize()/sizeof(keyValue);
-	for (int x =deletesize*rolling_merge_index; x< deletesize; x++) {
-		array[x].value = NOT_FOUND;
-	}
-	rolling_merge_index++;
-	fill = fill - deletesize;
-}
 
 void BasicArray::deleteAll() {
 	fill = 0;

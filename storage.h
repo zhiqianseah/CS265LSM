@@ -55,16 +55,9 @@ class Storage {
 		//load an array of KeyValues into the storage 
 		virtual void bulkload(std::pair<keyValue*, int>* k_lists, int k) = 0;
 
-		//transfer a page of keyvalue pairs out
-		//returns a pointer to the start of the keyvalue store, and an int for the number of KV pairs to transfer
-		virtual std::pair<keyValue*, int> transferPage() = 0;
-
 		//transfer all the KV pairs out 
 		//returns a pointer to the start of the keyvalue store, and an int for the number of KV pairs to transfer
 		virtual std::pair<keyValue*, int> transferAll() = 0;
-
-		//delete a page of keyvalue pairs
-		virtual void deletePage() = 0;
 
 		//delete all keyvalue pairs
 		virtual void deleteAll() = 0;

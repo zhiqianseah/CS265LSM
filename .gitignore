@@ -10,3 +10,9 @@ mmap_eg.exe
 sorted.exe
 lsm2.exe
 lsm2.exe.stackdump
+bplustree.exe.stackdump
+indexedarray.exe.stackdump
+bplustree.exe
+indexedarray.exe
+lsm1_output
+lsm2_output

@@ -84,6 +84,7 @@ int SortedArray::get(int key){
 }
 
 bool SortedArray::remove(int key){
+	std::cout<<"removing\n";
 	int pos = find_position(key);
 
 	if (array[pos].key != key){
@@ -107,6 +108,12 @@ void SortedArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
 	if (k == 1){
 		keyValue* input = k_lists[0].first;
 		int size = k_lists[0].second;
+
+		if (size > max_size){
+			std::cout<<"Error. Array is not large enough\n";
+			return;
+		}
+
 		for (int x = 0; x< size; x++)
 		{
 			array[x].key = input[x].key;
@@ -118,7 +125,7 @@ void SortedArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
 	else {
 
 		heap_merge_k_list heapmerge = heap_merge_k_list(k_lists, k);
-		fill = heapmerge.merge(array, max_size);
+		fill = heapmerge.merge(array, max_size, nullptr);
 	}
 /*
 	//find the left and right boundaries that exist in the current array
