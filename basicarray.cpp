@@ -2,8 +2,9 @@
 
 
 
-BasicArray::BasicArray(int size) {
-	std::cout<<"creating array of size "<< size<<"\n";
+BasicArray::BasicArray(int size, bool verbose_input) {
+	verbose = verbose_input;
+	if (verbose) std::cout<<"creating array of size "<< size<<"\n";
 	array = new keyValue[size];
 
 	//number of valid entries in the array
@@ -14,16 +15,17 @@ BasicArray::BasicArray(int size) {
 	max_size = size;
 }
 
-BasicArray::BasicArray(int size, const char* filepath) {
+BasicArray::BasicArray(int size, const char* filepath, bool verbose_input) {
 	fill = 0;
 	endarray = 0;
 	max_size = size;
+	verbose = verbose_input;
 
     int result;
     filesize = size*sizeof(keyValue);
-	std::cout<<"creating array of size "<< size<< " at "<< filepath<<" with filesize"<<filesize<<"\n";
+	if (verbose) std::cout<<"creating array of size "<< size<< " at "<< filepath<<" with filesize"<<filesize<<"\n";
 	//open file at filepath. create it if necessary
-	fd = open(filepath, O_RDWR | O_CREAT);
+	fd = open(filepath, O_RDWR | O_CREAT,  0666);
     if (fd == -1) {
 	std::cout<<"Error in opening or creating file. Exiting.\n";
 	exit(EXIT_FAILURE);
@@ -156,7 +158,7 @@ std::pair<keyValue*, int> BasicArray::transferAll(){
 	output.first = array;
 	output.second = transfersize;
 
-	std::cout<<"moving "<< transfersize<<" from:"<<array[0].key<<"onwards\n";
+	if (verbose) std::cout<<"moving "<< transfersize<<" from:"<<array[0].key<<"onwards\n";
 	return output;
 }
 
@@ -166,7 +168,7 @@ void BasicArray::deleteAll() {
 	endarray = 0;
 }
 
-BasicArray::~BasicArray(){
+void BasicArray::closeFile(){
 
 	if (fd == -1) {
 		delete[] array;

@@ -1,7 +1,8 @@
 #include "indexedarray.h"
 
-IndexedArray::IndexedArray(int size) {
-	std::cout<<"creating array of size "<< size<<"\n";
+IndexedArray::IndexedArray(int size, bool verbose_input) {
+	verbose = verbose_input;
+	if (verbose) std::cout<<"creating array of size "<< size<<"\n";
 	array = new keyValue[size];
 
 	//number of valid entries in the array
@@ -22,8 +23,8 @@ IndexedArray::IndexedArray(int size) {
 	KV_in_page = pagesize/sizeof(keyValue);
 }
 
-IndexedArray::IndexedArray(int size, const char* filepath) {
-
+IndexedArray::IndexedArray(int size, const char* filepath, 	bool verbose_input) {
+	verbose = verbose_input;
 	fill = 0;
 	endarray = 0;
 	max_size = size;
@@ -38,10 +39,11 @@ IndexedArray::IndexedArray(int size, const char* filepath) {
 	indexsize = (size+pagesize-1)/pagesize;
 
     filesize = size*sizeof(keyValue) + indexsize * pagesize;
-	std::cout<<"creating array of size "<< filesize<< " with indexsize " <<indexsize<<" at "<< filepath<<"\n";
+    //filesize = size*sizeof(keyValue);
+	if (verbose) std::cout<<"creating array of size "<< size<< " with indexsize " <<indexsize<<" and filesize "<<filesize<<" at "<< filepath<<"\n";
 
 	//open file at filepath. create it if necessary
-	fd = open(filepath, O_RDWR | O_CREAT);
+	fd = open(filepath, O_RDWR | O_CREAT,  0666);
     if (fd == -1) {
 	std::cout<<"Error in opening or creating file. Exiting.\n";
 	exit(EXIT_FAILURE);
@@ -93,7 +95,7 @@ bool IndexedArray::insert(int key, int value)
 int IndexedArray::get(int key)
 {
 	int page = find_page_in_index(key);
-	std::cout<<"key is found in page:"<<page<<"\n";
+	//std::cout<<"key is found in page:"<<page<<"\n";
 	int position = find_position(page* KV_in_page, ((page+1)*KV_in_page)-1,key);
 
 	if (array[position].key != key){
@@ -137,7 +139,7 @@ void IndexedArray::bulkload(std::pair<keyValue*, int>* k_lists, int k)
 			{
 				int input_index = x/KV_in_page;
 				index[input_index] = input[x].key;
-				std::cout<<"inserting index of:"<<index[input_index]<<" at "<<input_index<<"\n";
+				if (verbose) std::cout<<"inserting index of:"<<index[input_index]<<" at "<<input_index<<"\n";
 			}
 		}
 
@@ -145,7 +147,7 @@ void IndexedArray::bulkload(std::pair<keyValue*, int>* k_lists, int k)
 	}
 	else {
 
-		heap_merge_k_list heapmerge = heap_merge_k_list(k_lists, k);
+		heap_merge_k_list heapmerge = heap_merge_k_list(k_lists, k, verbose);
 		fill = heapmerge.merge(array, max_size, index);
 	}
 }
@@ -164,8 +166,22 @@ void IndexedArray::deleteAll()
 }
 
 
-IndexedArray::~IndexedArray()
+void IndexedArray::closeFile()
 {
+
+	if (fd == -1) {
+		delete[] array;
+	}
+	else{
+		//unmap the file
+	    if (munmap(index, filesize) == -1) {
+		std::cout<<"Error in un-mmapping the file";
+		/* Decide here whether to close(fd) and exit() or not. Depends... */
+	    }
+   
+		//close the file descriptor
+    	close(fd);		
+	}
 
 }
 

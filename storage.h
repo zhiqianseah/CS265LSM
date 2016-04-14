@@ -12,6 +12,7 @@
 
 //constant that is used when the element is not found
 #define NOT_FOUND -2147483648
+#define DELETED 2147483647
 //folder for on-disk storage
 #define FOLDERPATH "C:/tmp/"
 
@@ -61,6 +62,8 @@ class Storage {
 
 		//delete all keyvalue pairs
 		virtual void deleteAll() = 0;
+
+		virtual void closeFile() = 0;
 
 		int get_fill() {return fill;} 
 

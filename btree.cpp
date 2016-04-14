@@ -392,3 +392,5 @@ void BTree::delete_node(Node* node) {
 	delete[] node->children;
 	delete node;
 }
+
+void BTree::closeFile(){}

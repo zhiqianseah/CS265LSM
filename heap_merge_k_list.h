@@ -39,11 +39,13 @@ class heap_merge_k_list {
 		void heapify(int parent);
 
 		void swap(HeapNode* first, HeapNode* second);
+
+		bool verbose;
 	public:
 
 		//constructor. takes in an array of (KV pointers, length), and an int
 		//for number of arrays
-		heap_merge_k_list(std::pair<keyValue*, int>* k_lists, int k );
+		heap_merge_k_list(std::pair<keyValue*, int>* k_lists, int k, bool verbose );
 
 
 		//dest is the memory address to write the merged KVs to

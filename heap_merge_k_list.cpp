@@ -54,7 +54,8 @@ void heap_merge_k_list::swap(HeapNode* first, HeapNode* second) {
 }
 
 
-heap_merge_k_list::heap_merge_k_list(std::pair<keyValue*, int>* k_lists, int k) {
+heap_merge_k_list::heap_merge_k_list(std::pair<keyValue*, int>* k_lists, int k, bool verbose_input) {
+	verbose = verbose_input;
 	size = k;
 	Heap = new HeapNode[k];
 	k_sorted_lists = k_lists;
@@ -82,7 +83,7 @@ heap_merge_k_list::heap_merge_k_list(std::pair<keyValue*, int>* k_lists, int k) 
 
 int heap_merge_k_list::merge(keyValue* dest, int max_size, int* index){
 
-	std::cout<<"total keys are:"<<total_keys<<"\n";
+	if (verbose) std::cout<<"total keys are:"<<total_keys<<"\n";
 
 	int added_keys = 0;
 
@@ -123,7 +124,7 @@ int heap_merge_k_list::merge(keyValue* dest, int max_size, int* index){
 				{
 					int input_index = added_keys/(pagesize/sizeof(keyValue));
 					index[input_index] = dest[added_keys].key;
-					std::cout<<"(heap merge) inserting index of:"<<index[input_index]<<" at "<<input_index<<"\n";
+					if (verbose) std::cout<<"(heap merge) inserting index of:"<<index[input_index]<<" at "<<input_index<<"\n";
 				}
 
 				added_keys++;
@@ -147,7 +148,7 @@ int heap_merge_k_list::merge(keyValue* dest, int max_size, int* index){
 
 		replace_min(min_node);
 	}
-	std::cout<<"Total added keys are:"<<added_keys<<"\n";
+	if (verbose) std::cout<<"Total added keys are:"<<added_keys<<"\n";
 
 
 	//TESTING CODE

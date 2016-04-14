@@ -50,6 +50,7 @@ class BTree : public Storage {
 
 		void print_all();
 		void print_node(Node* node);
+		void closeFile();
 		~BTree();		
 };
 

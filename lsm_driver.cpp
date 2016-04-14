@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
 	leveltypes[2] = 2;
 
 	std::cout<<"Starting LSM\n";
-	LSM lsm(3, leveltypes, 3, 3);
+	LSM lsm(2, 3, 3, true);
 	Storage *storage = &lsm;
 
 	std::cout<<"Starting test\n";

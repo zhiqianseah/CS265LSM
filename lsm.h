@@ -1,22 +1,30 @@
 #include "storage.h"
 
+struct StorageLL_Node {
+	Storage** level_storage;
+	StorageLL_Node* next_node;
+	int level_fill;
+};
+
+
+
 
 class LSM : public Storage {
 	private:
-		Storage*** lsm_storage;
 
+		StorageLL_Node* lsm_storage_head;
 		//total number of levels in the LSM
 		int levels;
 
 		//ratio of sizes between levels
 		int ratio;
-
+		int level_types;
+		int c0_size;
 
 		//current fill up to which level
 		int curr_fill_level;
 
-		//current fill up to which index
-		int* curr_fill_index_per_level;
+		bool verbose;
 	public:
 
 		/*Constructor.
@@ -26,7 +34,7 @@ class LSM : public Storage {
 			ratio: the size ratio of each level
 
 		*/
-		LSM(int levels, int* level_types, int c0_size, int ratio);
+		LSM(int level_types, int c0_size, int ratio, bool verbose);
 
 		bool insert(int key, int value);
 
@@ -43,9 +51,9 @@ class LSM : public Storage {
 
 		void deleteAll();
 
-
+		void closeFile();
 		//recursive algorithm to merge level with the level below
-		void merge(int level);
+		void merge(StorageLL_Node* curr_node, int level);
 
 		~LSM();	
 };

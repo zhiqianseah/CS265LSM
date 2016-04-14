@@ -36,17 +36,18 @@ class IndexedArray : public Storage {
 		//number of pages for the index
 		int indexsize;
 
-
+		bool verbose; 
 		int KV_in_page;
 		int find_page_in_index(int key);
 		int find_position(int first, int last, int key);
+
 	public:
 
 		//Constructor. 
-		IndexedArray(int size);
+		IndexedArray(int size, bool verbose);
 
 		//Constructor. Create  on disk at filepath
-		IndexedArray(int size, const char* filepath);
+		IndexedArray(int size, const char* filepath, bool verbose);
 
 
 
@@ -65,7 +66,7 @@ class IndexedArray : public Storage {
 		void deleteAll();
 
 
-		~IndexedArray();
+		void closeFile();
 };
 
 #endif

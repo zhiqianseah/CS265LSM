@@ -22,14 +22,14 @@ class BasicArray : public Storage {
 		//size of the file in disk (if used)
 		int filesize;
 
-
+		bool verbose;
 	public:
 
 		//Constructor. Create a sorted array with given input size in memory
-		BasicArray(int size);
+		BasicArray(int size, bool verbose);
 
 		//Constructor. Create a sorted array with given input size on disk at filepath
-		BasicArray(int size, const char* filepath);
+		BasicArray(int size, const char* filepath, bool verbose);
 
 
 
@@ -48,7 +48,7 @@ class BasicArray : public Storage {
 		void deleteAll();
 
 
-		~BasicArray();
+		void closeFile();
 };
 
 

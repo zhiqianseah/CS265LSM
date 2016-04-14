@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 	}
 
 
-	std::string filepath = std::string(FOLDERPATH) + "LSM.bin";
+	std::string filepath = std::string(FOLDERPATH) + "LSM1_0.bin";
 	IndexedArray BPT(num_inputs*2, filepath.c_str());
 	Storage *storage = &BPT;
 

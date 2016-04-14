@@ -9,7 +9,7 @@
 #include <sys/mman.h>
 #include <iostream>
 
-#define FILEPATH "C:/tmp/mmapped.bin"
+#define FILEPATH "C:/tmp/LSM1_1.bin"
 #define NUMINTS  (10)
 #define FILESIZE (NUMINTS * sizeof(int))
 

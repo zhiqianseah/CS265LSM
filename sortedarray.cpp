@@ -84,7 +84,7 @@ int SortedArray::get(int key){
 }
 
 bool SortedArray::remove(int key){
-	std::cout<<"removing\n";
+	if (verbose) std::cout<<"removing\n";
 	int pos = find_position(key);
 
 	if (array[pos].key != key){
@@ -110,7 +110,7 @@ void SortedArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
 		int size = k_lists[0].second;
 
 		if (size > max_size){
-			std::cout<<"Error. Array is not large enough\n";
+			if (verbose) std::cout<<"Error. Array is not large enough\n";
 			return;
 		}
 
@@ -124,99 +124,10 @@ void SortedArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
 	}
 	else {
 
-		heap_merge_k_list heapmerge = heap_merge_k_list(k_lists, k);
+		heap_merge_k_list heapmerge = heap_merge_k_list(k_lists, k, verbose);
 		fill = heapmerge.merge(array, max_size, nullptr);
 	}
-/*
-	//find the left and right boundaries that exist in the current array
-	int leftpos = find_position(input[0].key);
-	int rightpos = find_position(input[size-1].key);
-	int range = rightpos - leftpos;
 
-	//algo to merge 2 sorted arrays
-	keyValue* buffer = new keyValue[size + range];
-
-	int i = 0;
-	int j = 0;
-	int k = 0;
-	int newelements = 0;
-
-	while (i< range && j < size) {
-		
-		if (array[leftpos + i].key < input[j].key) {
-			buffer[k].key = array[leftpos + i].key;
-			buffer[k].value = array[leftpos + i].value;
-			i++;
-		}
-		else {
-			buffer[k].key = input[j].key;	
-			buffer[k].value = input[j].value;	
-			//skip duplicates. take the input as the newer value
-			if (array[leftpos + i].key == input[j].key) {
-				i++;
-				newelements--;
-			}	
-			j++;
-			newelements++;
-		}
-		k++;
-	}
-
-	if (i<range) {
-		for (int x = i; x< range; x++) {
-			buffer[k].key = array[leftpos+x].key;
-			buffer[k].value = array[leftpos + x].value;
-			k++;
-		}
-	} else {
-		for (int x = j; x < size; x++) {
-			buffer[k].key = input[x].key;
-			buffer[k].value = input[x].value;
-			newelements++;		
-			k++;
-		}
-	}
-	//end algo to merge 2 sorted array----
-
-*/
-
-	//sanity check
-	/*
-	for (int x = 0; x< k; x++){
-		std::cout<<buffer[x].key<<","<<buffer[x].value<<" ";
-	}
-	std::cout<<std::endl; 
-	std::cout<<"Number of new elements:"<<newelements<<std::endl;
-	*/
-
-
-/*
-	//make sure we don't overflow the array
-	if (fill+newelements <= max_size)
-	{
-		//shift current elements to the right to allocate space
-		for (int x =fill+newelements-1; x>=rightpos && x>=newelements; x--) {
-			array[x].key = array[x- newelements].key;
-			array[x].value = array[x- newelements].value;
-		}
-
-		//insert new elements 
-		for (int x =leftpos; x<leftpos+k; x++) {
-			array[x].key = buffer[x-leftpos].key;
-			array[x].value = buffer[x-leftpos].value;
-		}
-	}
-
-	fill = fill+newelements;
-	delete[] buffer;
-	/*
-
-	for (int x = 0; x<size; x++) {
-		if (input[x].key != NOT_FOUND) {
-			insert(input[x].key, input[x].value);
-		}
-	}
-	*/
 } 
 void SortedArray::print_all(){
 	std::cout<<"---------printing current array----------\n";
