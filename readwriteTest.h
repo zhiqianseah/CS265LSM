@@ -1,0 +1,5 @@
+#ifndef _MSC_VER
+#define _GLIBCXX_USE_NOEXCEPT _GLIBCXX_USE_NOEXCEPT
+#else
+#define _GLIBCXX_USE_NOEXCEPT
+#endif

@@ -46,7 +46,7 @@ class BasicArray : public Storage {
 		std::pair<keyValue*, int> transferAll();
 
 		void deleteAll();
-
+		void printAll();
 
 		void closeFile();
 };

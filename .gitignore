@@ -19,3 +19,7 @@ lsm2_output
 lsm3.exe
 lsm3.exe.stackdump
 mmap.exe
+boosteg
+boost_example.cpp
+lsm_mt.exe
+rwtest.exe

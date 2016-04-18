@@ -241,3 +241,10 @@ int IndexedArray::find_position(int first, int last, int key) {
 	}
 }
 
+void IndexedArray::printAll()
+{
+	for (int x =0; x<fill; x++)
+	{
+		std::cout<<array[x].key<<" ";
+	}
+}

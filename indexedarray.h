@@ -65,7 +65,7 @@ class IndexedArray : public Storage {
 
 		void deleteAll();
 
-
+		void printAll();
 		void closeFile();
 };
 

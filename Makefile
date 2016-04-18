@@ -1,4 +1,5 @@
 CPPFLAGS = -std=c++11 -g
+BOOST = -I ~/boost/boost_1_60_0 ~/boost/boost_1_60_0/stage/lib/libboost_thread.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so
 
 clean:
 	rm -f C:/tmp/LSM*.bin 
@@ -50,3 +51,27 @@ indexedarray: indexedarray_tester.cpp storage.h indexedarray.cpp heap_merge_k_li
 
 indexedarraytest:
 	./indexedarray.exe 100
+
+
+rwlock:
+	g++  readwriteTest.cpp -o rwtest.exe -pthread -std=c++11
+
+boosteg: boost_example.cpp
+	g++ -I ~/boost/boost_1_60_0 boost_example.cpp -o boosteg
+	echo 1 2 3 | ./boosteg
+
+boost_rwlock: boost_rwlock.cpp
+	g++ $(CPPFLAGS) boost_rwlock.cpp -o boost_rwlock $(BOOST) 
+	./boost_rwlock
+
+boost_rwlock2: boost_rwlock2.cpp
+	g++ $(CPPFLAGS) boost_rwlock2.cpp -o boost_rwlock2 $(BOOST) 
+
+boost_rw_run:
+	./boost_rwlock2
+
+lsmmt: lsm_mt_driver.cpp lsm_mt.h lsm_mt.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp
+	g++ $(CPPFLAGS) lsm_mt_driver.cpp lsm_mt.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm_mt.exe $(BOOST) 
+
+lsmmttest:
+	./lsm_mt.exe

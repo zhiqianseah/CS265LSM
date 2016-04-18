@@ -1,15 +1,19 @@
 #include "storage.h"
+#include <boost/thread.hpp>
+
+
 
 struct StorageLL_Node {
 	Storage** level_storage;
 	StorageLL_Node* next_node;
 	int level_fill;
+	boost::shared_mutex* storagelocks;
 };
 
 
 
 
-class LSM : public Storage {
+class LSM_mt : public Storage {
 	private:
 
 		StorageLL_Node* lsm_storage_head;
@@ -25,6 +29,14 @@ class LSM : public Storage {
 		int curr_fill_level;
 
 		bool verbose;
+
+		int storage_getter(int key, StorageLL_Node* curr_node, int index);
+
+		bool storage_inserter(int key, int value, StorageLL_Node* curr_node, int index);
+
+		void lock_before_transfer(StorageLL_Node* curr_node, int curr_level, int num_lists, int curr_lock_index);
+
+		void Mass_Transfer(StorageLL_Node* curr_node, int curr_level, int num_lists);
 	public:
 
 		/*Constructor.
@@ -34,7 +46,7 @@ class LSM : public Storage {
 			ratio: the size ratio of each level
 
 		*/
-		LSM(int level_types, int c0_size, int ratio, bool verbose);
+		LSM_mt(int level_types, int c0_size, int ratio, bool verbose);
 
 		bool insert(int key, int value);
 
@@ -55,6 +67,7 @@ class LSM : public Storage {
 		//recursive algorithm to merge level with the level below
 		void merge(StorageLL_Node* curr_node, int level);
 
+
 		void printAll();
-		~LSM();	
+		~LSM_mt();	
 };

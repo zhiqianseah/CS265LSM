@@ -186,3 +186,10 @@ void BasicArray::closeFile(){
 	}
 
 }
+
+void BasicArray::printAll(){
+	for (int x =0; x<fill; x++)
+	{
+		std::cout<<array[x].key<<" ";
+	}
+}

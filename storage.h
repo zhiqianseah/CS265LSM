@@ -14,7 +14,7 @@
 #define NOT_FOUND -2147483648
 #define DELETED 2147483647
 //folder for on-disk storage
-#define FOLDERPATH "C:/tmp/"
+#define FOLDERPATH "/tmp/"
 
 struct keyValue{
 	int key;
@@ -68,6 +68,8 @@ class Storage {
 		int get_fill() {return fill;} 
 
 		int get_max_size() {return max_size;} 
+
+		virtual void printAll() = 0;
 };
 
 #endif
