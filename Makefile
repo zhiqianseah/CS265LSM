@@ -1,5 +1,5 @@
 CPPFLAGS = -std=c++11 -g
-BOOST = -I ~/boost/boost_1_60_0 ~/boost/boost_1_60_0/stage/lib/libboost_thread.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so
+BOOST = -I ~/boost/boost_1_60_0 ~/boost/boost_1_60_0/stage/lib/libboost_thread.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so
 
 clean:
 	rm -f C:/tmp/LSM*.bin 

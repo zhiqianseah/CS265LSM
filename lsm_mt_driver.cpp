@@ -4,6 +4,7 @@
 #include <iostream> 
 #include <cstdlib>
 #include <boost/thread.hpp>
+#include <chrono>
 
 using namespace std;
 
@@ -39,18 +40,28 @@ int main(int argc, char* argv[]) {
 
 
 	storage = &lsm;
+
+	//set up timers
+    chrono::time_point<chrono::system_clock> start, end;
+    start = std::chrono::system_clock::now();
+
 	boost::thread_group group;
 	for (int i = 0; i < NUM_THREADS; ++i)
 		group.add_thread(new boost::thread(child_thread, i));
 	    //group.create_thread(reader,i);
 	group.join_all();
 
+
+    end = chrono::system_clock::now();
+    chrono::duration<double> elapsed_seconds = end-start;
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+
 	cout<<storage->get(3)<<"\n";
 	cout<<storage->get(513)<<"\n";
 	cout<<storage->get(1024)<<"\n";
 	cout<<storage->get(2040)<<"\n";
 
-	storage->printAll();
+	//storage->printAll();
 /*
 
 	std::cout<< storage->get(3) <<"\n";
