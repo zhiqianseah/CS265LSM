@@ -260,7 +260,7 @@ int LSM_mt::storage_getter(int key, StorageLL_Node* curr_node, int index){
 
  	// get shared access
   	boost::shared_lock<boost::shared_mutex> lock(curr_node->storagelocks[index]);
-	return curr_node->level_storage[0]->get(key);
+	return curr_node->level_storage[index]->get(key);
 }
 
 int LSM_mt::get(int key) {
@@ -277,7 +277,7 @@ int LSM_mt::get(int key) {
 
 		get_level++;
 		curr_node = curr_node->next_node;
-		if (verbose) std::cout<<"reading from level:"<<get_level<<"\n";
+		if (verbose) std::cout<<"reading from level:"<<get_level<<" level_indexes:"<<curr_node->level_fill-1<<"\n";
 
 		//run the array at a level backwards, because the array at the end
 		//are more recent

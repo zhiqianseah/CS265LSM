@@ -1,0 +1,133 @@
+
+
+const int RATIO = 3;
+const int INITIAL_PAGES = 1;
+const int NUM_THREADS = 4;
+const bool VERBOSE = false;
+const int READ_PERCENTAGE = 99;
+const int LEVELS = 8;
+
+
+8 threads admission queue
+
+Starting LSM
+Starting test
+Loaded:1679360
+elapsed time: 297.188s.   Number of operations:85647360
+Average elapsed time for 1 runs: 297.188s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_queue
+g++ -std=c++11 -g lsm_mt_admission_queue.cpp lsm.cpp lsm_mt.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm_mt_queue.exe -I ~/boost/boost_1_60_0 ~/boost/boost_1_60_0/stage/lib/libboost_thread.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so 
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_queue_run
+
+1 thread admission queue
+
+./lsm_mt_queue.exe
+Starting LSM
+Starting test
+Loaded:1679360
+elapsed time: 501.026s.   Number of operations:85647360
+Average elapsed time for 1 runs: 501.026s
+Ending LSM
+
+
+
+4 threads admission queue
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_queue
+g++ -std=c++11 -g lsm_mt_admission_queue.cpp lsm.cpp lsm_mt.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm_mt_queue.exe -I ~/boost/boost_1_60_0 ~/boost/boost_1_60_0/stage/lib/libboost_thread.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so 
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_queue_run
+./lsm_mt_queue.exe
+Starting LSM
+Starting test
+Loaded:1679360
+elapsed time: 337.839s.   Number of operations:85647360
+Average elapsed time for 1 runs: 337.839s
+Ending LSM
+
+
+
+---------------------------------------------------------------------------------------------------
+
+8 threads workload 7 levels 50 read-multiplier
+
+./lsm_mt_workload_input.exe 
+Starting LSM
+Starting test
+Loaded:559616
+elapsed time: 128.468s.   Number of operations:28540416
+Average elapsed time for 1 runs: 128.468s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_workload
+g++ -std=c++11 -g lsm_mt_driver_workload.cpp lsm_mt.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm_mt_workload_input.exe -I ~/boost/boost_1_60_0 ~/boost/boost_1_60_0/stage/lib/libboost_thread.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so 
+
+1 thread workload
+
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_workload_run
+./lsm_mt_workload_input.exe 
+Starting LSM
+Starting test
+Loaded:559616
+elapsed time: 261.293s.   Number of operations:28540416
+Average elapsed time for 1 runs: 261.293s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_workload
+g++ -std=c++11 -g lsm_mt_driver_workload.cpp lsm_mt.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm_mt_workload_input.exe -I ~/boost/boost_1_60_0 ~/boost/boost_1_60_0/stage/lib/libboost_thread.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so 
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_workload_run
+
+4 thread workload
+
+./lsm_mt_workload_input.exe 
+Starting LSM
+Starting test
+Loaded:559616
+elapsed time: 138.103s.   Number of operations:28540416
+Average elapsed time for 1 runs: 138.103s
+Ending LSM
+
+
+./lsm_mt_workload_input.exe 
+Starting LSM
+Starting test
+Loaded:1679360
+elapsed time: 1535.23s.   Number of operations:85647360
+Average elapsed time for 1 runs: 1535.23s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ 
+
+---------------------------------------------------------------------------------------------------
+level =8
+
+8 thread 
+
+./lsm_mt_workload_input.exe 
+Starting LSM
+Starting test
+Loaded:1679360
+elapsed time: 1535.23s.   Number of operations:85647360
+Average elapsed time for 1 runs: 1535.23s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_workload
+g++ -std=c++11 -g lsm_mt_driver_workload.cpp lsm_mt.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm_mt_workload_input.exe -I ~/boost/boost_1_60_0 ~/boost/boost_1_60_0/stage/lib/libboost_thread.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so ~/boost/boost_1_60_0/stage/lib/libboost_system.so 
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ make lsmmt_workload_run
+
+4 thread
+
+./lsm_mt_workload_input.exe 
+Starting LSM
+Starting test
+Loaded:1679360
+elapsed time: 1611.99s.   Number of operations:85647360
+Average elapsed time for 1 runs: 1611.99s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ 
+
+1 thread
+
+./lsm_mt_workload_input.exe 
+Starting LSM
+Starting test
+Loaded:1679360
+elapsed time: 2052.95s.   Number of operations:85647360
+Average elapsed time for 1 runs: 2052.95s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ 

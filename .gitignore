@@ -23,3 +23,9 @@ boosteg
 boost_example.cpp
 lsm_mt.exe
 rwtest.exe
+lsm_mt_file_input.exe
+lsm_mt_queue.exe
+lsm_mt_workload_input.exe
+workload
+workload1
+workload_simple

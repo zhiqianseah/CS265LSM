@@ -188,6 +188,7 @@ void BasicArray::closeFile(){
 }
 
 void BasicArray::printAll(){
+	std::cout<<"Fill is:"<<fill<<"\n";
 	for (int x =0; x<fill; x++)
 	{
 		std::cout<<array[x].key<<" ";

@@ -75,3 +75,23 @@ lsmmt: lsm_mt_driver.cpp lsm_mt.h lsm_mt.cpp basicarray.cpp basicarray.h storage
 
 lsmmttest:
 	./lsm_mt.exe
+
+lsmmt_file: lsm_mt_driver_file.cpp lsm_mt.h lsm_mt.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp
+	g++ $(CPPFLAGS) lsm_mt_driver_file.cpp lsm_mt.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm_mt_file_input.exe $(BOOST) 
+
+lsmmt_file_run:
+	./lsm_mt_file_input.exe workload
+
+
+lsmmt_workload: lsm_mt_driver_workload.cpp lsm_mt.h lsm_mt.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp
+	g++ $(CPPFLAGS) lsm_mt_driver_workload.cpp lsm_mt.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm_mt_workload_input.exe $(BOOST) 
+
+lsmmt_workload_run:
+	./lsm_mt_workload_input.exe 
+
+
+lsmmt_queue: lsm_mt_admission_queue.cpp lsm.h  lsm_mt.h lsm_mt.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp
+	g++ $(CPPFLAGS) lsm_mt_admission_queue.cpp lsm.cpp lsm_mt.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm_mt_queue.exe $(BOOST) 
+
+lsmmt_queue_run:
+	./lsm_mt_queue.exe
