@@ -9,12 +9,6 @@
 //Input Parameters
 int main(int argc, char* argv[]) {
 
-
-	int leveltypes[3];
-	leveltypes[0] = 1;
-	leveltypes[1] = 2;
-	leveltypes[2] = 2;
-
 	std::cout<<"Starting LSM\n";
 	LSM lsm(2, 3, 3, true);
 	Storage *storage = &lsm;

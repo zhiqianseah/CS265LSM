@@ -131,3 +131,142 @@ elapsed time: 2052.95s.   Number of operations:85647360
 Average elapsed time for 1 runs: 2052.95s
 Ending LSM
 zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+./lsm_mt_queue.exe
+Insufficient Number of input parameters. Using Default Parameters.
+Starting LSM
+Starting test
+Loaded:1000000
+elapsed time: 22.6815s.   Number of operations:2000000
+Average elapsed time for 1 runs: 22.6815s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 3 0 1000000 1000000 99 4 2
+Starting LSM
+Starting test
+Loaded:1000000
+elapsed time: 22.6203s.   Number of operations:2000000
+Loaded:1000000
+elapsed time: 22.6656s.   Number of operations:2000000
+Average elapsed time for 2 runs: 22.6429s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 3 0 1000000 1000000 99 8 2
+Starting LSM
+Starting test
+Loaded:1000000
+elapsed time: 22.6994s.   Number of operations:2000000
+Loaded:1000000
+elapsed time: 22.6032s.   Number of operations:2000000
+Average elapsed time for 2 runs: 22.6513s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 3 0 1000000 1000000 99 1 2
+Starting LSM
+Starting test
+Loaded:1000000
+elapsed time: 23.2233s.   Number of operations:2000000
+Loaded:1000000
+elapsed time: 23.2521s.   Number of operations:2000000
+Average elapsed time for 2 runs: 23.2377s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 3 0 1000000 10000000 99 1 2
+Starting LSM
+Starting test
+Loaded:1000000
+elapsed time: 65.3338s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 64.8241s.   Number of operations:11000000
+Average elapsed time for 2 runs: 65.0789s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 3 0 1000000 10000000 99 8 2
+Starting LSM
+Starting test
+Loaded:1000000
+elapsed time: 49.0187s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 49.5864s.   Number of operations:11000000
+Average elapsed time for 2 runs: 49.3025s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 99 1 2
+Starting LSM
+Starting test
+Loaded:1000000
+elapsed time: 65.9249s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 65.9285s.   Number of operations:11000000
+Average elapsed time for 2 runs: 65.9267s
+Ending LSM
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 99 8 2
+Starting LSM
+Starting test
+Loaded:1000000
+elapsed time: 48.3367s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 49.7271s.   Number of operations:11000000
+Average elapsed time for 2 runs: 49.0319s
+Ending LSM
+
+
+
+
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 99 1 500000 100000 8 2
+Loaded:1000000
+elapsed time: 51.3024s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 52.8231s.   Number of operations:11000000
+Average elapsed time for 2 runs: 52.0627s
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 99 1 500000 1000 8 2
+Loaded:1000000
+elapsed time: 71.1749s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 73.3373s.   Number of operations:11000000
+Average elapsed time for 2 runs: 72.2561s
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 99 1 1000000 1000 8 2
+^C
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 99 1 990000 1000 8 2
+Loaded:1000000
+elapsed time: 72.9385s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 74.8122s.   Number of operations:11000000
+Average elapsed time for 2 runs: 73.8753s
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 99 1 0 1000 8 2
+Loaded:1000000
+elapsed time: 72.4026s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 74.0768s.   Number of operations:11000000
+Average elapsed time for 2 runs: 73.2397s
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 99 1 1000 1000 1 2
+Loaded:1000000
+elapsed time: 38.764s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 38.6032s.   Number of operations:11000000
+Average elapsed time for 2 runs: 38.6836s
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 99 1 999000 1000 1 2
+Loaded:1000000
+elapsed time: 38.5582s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 38.1993s.   Number of operations:11000000
+Average elapsed time for 2 runs: 38.3787s
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 50 1 500000 1000 1 2
+Loaded:1000000
+elapsed time: 186.879s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 188.044s.   Number of operations:11000000
+Average elapsed time for 2 runs: 187.462s
+zhiqian@zhiqian:~/Dropbox/CS 265/Project/CS265LSM$ ./lsm_mt_queue.exe 1 6 0 1000000 10000000 10 1 500000 1000 1 2
+Loaded:1000000
+elapsed time: 239.055s.   Number of operations:11000000
+Loaded:1000000
+elapsed time: 239.474s.   Number of operations:11000000
+Average elapsed time for 2 runs: 239.264s

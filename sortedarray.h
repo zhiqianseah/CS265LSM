@@ -21,5 +21,5 @@ class SortedArray : public BasicArray {
 		void print_all();
 
 		void bulkload(std::pair<keyValue*, int>* k_lists, int k);
-
+		std::pair<keyValue*, int> transferAll();
 };

@@ -136,3 +136,12 @@ void SortedArray::print_all(){
 	}
 	std::cout<<"---------END printing current array-----------\n";
 }
+
+std::pair<keyValue*, int> SortedArray::transferAll()
+{
+	std::pair <keyValue*, int> output;
+	output.first = array;
+	output.second = fill;
+	return output;
+}
+

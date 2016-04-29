@@ -49,6 +49,12 @@ class BasicArray : public Storage {
 		void printAll();
 
 		void closeFile();
+
+		void RemoveDuplicates();
+
+		void merge(int l, int m, int r);
+
+		void mergeSort(int left, int right);
 };
 
 

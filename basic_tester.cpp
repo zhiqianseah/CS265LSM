@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
 	BasicArray SA(atoi(argv[1]), filepath.c_str());
 	Storage *storage = &SA;
  
-
+/*
 	storage->insert(8192, 8191);
 	storage->insert(3, 2);
 	storage->insert(6, 8);
@@ -35,7 +35,21 @@ int main(int argc, char* argv[]) {
 	std::cout<< storage->remove(3) <<"\n";	
 
 	//this should return 1
-	std::cout<< storage->insert(9, 10) <<"\n";	
+	std::cout<< storage->insert(9, 11) <<"\n";	
+*/
+
+	for (int x =0; x< 10; x++)
+	{
+		storage->insert(x, 2);		
+	}
+	storage->printAll();
+
+	storage->transferAll();
+
+
+
+
+	storage->printAll();
 
 	std::cout<<"Ending basic tester\n";
 }

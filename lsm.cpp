@@ -57,7 +57,8 @@ LSM::LSM(int level_types_input, int c0_size_input, int ratio_input, bool verbose
 
 	//first level of LSM tree doesn't need a file path
 	lsm_storage_head->level_storage = new Storage*[1];
-	lsm_storage_head->level_storage[0] = new SortedArray(c0_size* KV_in_page, verbose);
+	//lsm_storage_head->level_storage[0] = new SortedArray(c0_size* KV_in_page, verbose);
+	lsm_storage_head->level_storage[0] = new BasicArray(c0_size* KV_in_page, verbose);
 	lsm_storage_head->next_node = nullptr;
 	lsm_storage_head->level_fill = 1;
 
@@ -157,7 +158,6 @@ void LSM::merge(StorageLL_Node* curr_node, int curr_level) {
 
 	//get the list of sorted arrays from each entry in the current level
 	for (int x = 0; x< num_lists; x++){
-		//all_lists[x] = lsm_storage[level][x]->transferAll();
 		all_lists[x] = curr_node->level_storage[x]->transferAll();
 	}
 
@@ -288,5 +288,19 @@ void LSM::closeFile(){}
 
 
 void LSM::printAll() {
-	std::cout<<"NOT IMPLEMENTED\n";
+	StorageLL_Node* curr_node = lsm_storage_head;
+
+	int counter = 0;
+	while(curr_node != nullptr)
+	{
+		std::cout<<"Printing Level:"<<counter<<"   "<<curr_node->level_fill<<"\n";
+		for (int x =0; x< curr_node->level_fill; x++)
+		{
+			std::cout<<"Printing Level:"<<counter<<" storage:"<<x<<"\n";
+			curr_node->level_storage[x]->printAll();
+			std::cout<<"\n\n";
+		}
+		curr_node = curr_node->next_node;
+		counter++;
+	}
 }

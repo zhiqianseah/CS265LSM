@@ -133,7 +133,6 @@ void IndexedArray::bulkload(std::pair<keyValue*, int>* k_lists, int k)
 			//Btree[x + pagesize-1] = input[x].key;
 			array[x].key = input[x].key;
 			array[x].value = input[x].value;
-
 			//if the entry is in a new page, add it to the index
 			if (x%KV_in_page == 0)
 			{
@@ -246,6 +245,6 @@ void IndexedArray::printAll()
 	std::cout<<"Fill is:"<<fill<<"\n";
 	for (int x =0; x<fill; x++)
 	{
-		std::cout<<array[x].key<<" ";
+		std::cout<<array[x].key<<","<<array[x].value<<"  ";
 	}
 }

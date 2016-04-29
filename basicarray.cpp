@@ -64,6 +64,7 @@ BasicArray::BasicArray(int size, const char* filepath, bool verbose_input) {
 bool BasicArray::insert(int key, int value) {
 
 	//std::cout<<"inserting:"<<key<<std::endl;
+/*
 	int hole = -1;
 	for (int x = 0; x< fill; x++) {
 		if (array[x].key == key) {
@@ -92,13 +93,24 @@ bool BasicArray::insert(int key, int value) {
 		array[endarray].value = value;
 		endarray+= 1;		
 	}
+*/
+	//if the array is maxed out. The check is only done here because
+	//a duplicate key may be inserted
+	if (max_size == endarray) {
+		return 0;
+	}
+
+	array[endarray].key = key;
+	array[endarray].value = value;
+	endarray+= 1;		
+
 
 	fill+= 1;
 	return 1;
 }
 
 int BasicArray::get(int key) {
-	for (int x = 0; x< fill; x++) {
+	for (int x = fill-1; x>= 0; x--) {
 		if (array[x].key == key) {
 			return array[x].value;
 		}
@@ -108,6 +120,8 @@ int BasicArray::get(int key) {
 
 
 bool BasicArray::remove(int key) {
+	return insert(key, NOT_FOUND);
+/*
 	for (int x = 0; x< fill; x++) {
 		if (array[x].key == key) {
 			array[x].value = NOT_FOUND;
@@ -116,9 +130,12 @@ bool BasicArray::remove(int key) {
 		}
 	}	
 	return 0;
+*/
 }
 
 bool BasicArray::update(int key, int value){
+	return insert(key, value);
+/*
 	for (int x = 0; x< fill; x++) {
 		if (array[x].key == key) {
 			array[x].value = value;
@@ -126,6 +143,7 @@ bool BasicArray::update(int key, int value){
 		}
 	}	
 	return 0;	
+	*/
 }
 
 void BasicArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
@@ -154,9 +172,16 @@ void BasicArray::bulkload(std::pair<keyValue*, int>* k_lists, int k){
 std::pair<keyValue*, int> BasicArray::transferAll(){
 	std::pair <keyValue*, int> output;
 
+	mergeSort(0, fill-1);
+
+	RemoveDuplicates();
+
+
 	int transfersize = fill;
 	output.first = array;
 	output.second = transfersize;
+
+
 
 	if (verbose) std::cout<<"moving "<< transfersize<<" from:"<<array[0].key<<"onwards\n";
 	return output;
@@ -191,6 +216,121 @@ void BasicArray::printAll(){
 	std::cout<<"Fill is:"<<fill<<"\n";
 	for (int x =0; x<fill; x++)
 	{
-		std::cout<<array[x].key<<" ";
+		std::cout<<array[x].key<<","<<array[x].value<<"  ";
+	}
+}
+
+
+void BasicArray::RemoveDuplicates() {
+
+	if (fill == 0)
+		return;
+
+	int tempkey = array[0].key;
+
+	int curr_counter = 0;
+	for (int x = 1; x< fill; x++)
+	{
+		if (array[x].key > tempkey)
+		{
+			curr_counter++;
+			array[curr_counter].key = array[x].key;
+			array[curr_counter].value = array[x].value;
+			tempkey = array[x].key;
+
+		}
+		else
+		{
+			array[curr_counter].value = array[x].value;
+		}
+
+	}
+	fill = curr_counter+1;
+}
+
+
+//http://geeksquiz.com/merge-sort/
+void BasicArray::merge(int l, int m, int r)
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 =  r - m;
+ 
+    /* create temp arrays */
+    keyValue* L = new keyValue[n1];
+    keyValue* R = new keyValue[n2];
+ 
+    /* Copy data to temp arrays L[] and R[] */
+    for (i = 0; i < n1; i++)
+    {
+        L[i].key = array[l + i].key;
+        L[i].value = array[l + i].value;    
+    }	
+    for (j = 0; j < n2; j++)
+    {
+        R[j].key = array[m + 1+ j].key;
+        R[j].value = array[m + 1+ j].value;
+    }
+
+    /* Merge the temp arrays back into arr[l..r]*/
+    i = 0; // Initial index of first subarray
+    j = 0; // Initial index of second subarray
+    k = l; // Initial index of merged subarray
+    while (i < n1 && j < n2)
+    {
+        if (L[i].key <= R[j].key)
+        {
+            array[k].key = L[i].key;
+            array[k].value = L[i].value;
+            i++;
+        }
+        else
+        {
+            array[k].key = R[j].key;
+            array[k].value = R[j].value;
+            j++;
+        }
+        k++;
+    }
+ 
+    /* Copy the remaining elements of L[], if there
+       are any */
+    while (i < n1)
+    {
+        array[k].key = L[i].key;
+        array[k].value = L[i].value;
+        i++;
+        k++;
+    }
+ 
+    /* Copy the remaining elements of R[], if there
+       are any */
+    while (j < n2)
+    {
+        array[k].key = R[j].key;
+        array[k].value = R[j].value;
+        j++;
+        k++;
+    }
+
+    delete[] L;
+    delete[] R;
+    //printAll();
+    //std::cout<<l<<" "<<m<<" "<<r<<"\n";
+}
+ 
+void BasicArray::mergeSort(int left, int right)
+{
+	if (left < right)
+	{
+		int middle = left+(right-left)/2;
+
+
+		//recursively split into halfs
+	    mergeSort(left, middle);
+	    mergeSort(middle+1, right);
+	 
+	 	//merge it back
+	    merge(left, middle, right);
 	}
 }
