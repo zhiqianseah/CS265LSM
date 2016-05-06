@@ -7,9 +7,9 @@
 int main(int argc, char* argv[]) {
 
 	//TEST CONSTANTS
-	int INITIAL_PAGES = 1;
-	int RATIO = 2;
-	int LEVELS = 2;
+	int INITIAL_PAGES = 4;
+	int RATIO = 4;
+	int LEVELS = 6;
 
 	int multiplier = INITIAL_PAGES * (1- pow(RATIO,LEVELS))/(1-RATIO);
 

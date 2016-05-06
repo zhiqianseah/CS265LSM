@@ -4,6 +4,7 @@ BOOST = -I ~/boost/boost_1_60_0 ~/boost/boost_1_60_0/stage/lib/libboost_thread.s
 clean:
 	rm -f C:/tmp/LSM*.bin 
 
+
 lsm: lsm_driver.cpp lsm.h lsm.cpp basicarray.cpp basicarray.h storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp
 	g++ $(CPPFLAGS) lsm_driver.cpp lsm.cpp basicarray.cpp storage.h btree.cpp sortedarray.cpp heap_merge_k_list.cpp indexedarray.cpp -o lsm.exe
 
@@ -104,6 +105,8 @@ lsmmt_queue: lsm_mt_admission_queue.cpp lsm.h  lsm_mt.h lsm_mt.cpp basicarray.cp
 lsmmt_queue_run:
 	./lsm_mt_queue.exe
 
+
+#---------------------------------TESTS--------------------------------------------------------------
 
 lsm_test_loading:
 	./lsm_mt_queue.exe 4 4 0 1000 0 0 0 0 0 1 10
@@ -425,3 +428,47 @@ lsm_test_loading_reading_100kb:
 	./lsm_mt_queue.exe 25 4 0 10000000 10000000 100 0 0 0 1 1
 	./lsm_mt_queue.exe 25 4 0 100000000 100000000 100 0 0 0 1 1
 	./lsm_mt_queue.exe 25 4 0 1000000000 1000000000 100 0 0 0 1 1
+
+#----------------------DEMO cases-------------------------------------
+
+lsm_demo0:
+	@echo "------------------Basic Funtionality Test----------------------"
+	./lsm_unit_test.exe
+
+lsm_demo1:
+	@echo "------------------Experiment 1 Demo: different load sizes----------------------"
+	./lsm_mt_queue.exe 4 4 0 1000 0 0 0 0 0 1 5
+	./lsm_mt_queue.exe 4 4 0 10000 0 0 0 0 0 1 5
+	./lsm_mt_queue.exe 4 4 0 100000 0 0 0 0 0 1 5
+
+lsm_demo2:
+	@echo "------------------Experiment 2 Demo: different workload----------------------"
+	./lsm_mt_queue.exe 4 4 0 100000 100000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 4 4 0 100000 100000 75 0 0 0 1 1
+	./lsm_mt_queue.exe 4 4 0 100000 100000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 4 4 0 100000 100000 25 0 0 0 1 1
+	./lsm_mt_queue.exe 4 4 0 100000 100000 0 0 0 0 1 1
+
+
+lsm_demo3:
+	@echo "------------------Experiment 3 Demo: different initial pages----------------------"
+	./lsm_mt_queue.exe 2 4 0 500000 500000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 20 4 0 500000 500000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 200 4 0 500000 500000 50 0 0 0 1 1
+
+lsm_demo4:
+	@echo "------------------Experiment 3 Demo: different ratio----------------------"
+	./lsm_mt_queue.exe 20 2 0 500000 500000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 20 4 0 500000 500000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 20 8 0 500000 500000 50 0 0 0 1 1
+
+lsm_demo5:
+	@echo "------------------Experiment 4 Demo: Multi-threading----------------------"
+	./lsm_mt_queue.exe 4 4 0 100000 100000 100 0 0 0 1 5
+	./lsm_mt_queue.exe 4 4 0 100000 100000 100 0 0 0 4 5
+	./lsm_mt_queue.exe 4 4 0 100000 100000 90 0 0 0 1 5
+	./lsm_mt_queue.exe 4 4 0 100000 100000 90 0 0 0 4 5	
+	./lsm_mt_queue.exe 4 4 0 100000 100000 50 0 0 0 1 5
+	./lsm_mt_queue.exe 4 4 0 100000 100000 50 0 0 0 4 5
+	./lsm_mt_queue.exe 4 4 0 100000 100000 10 0 0 0 1 5
+	./lsm_mt_queue.exe 4 4 0 100000 100000 10 0 0 0 4 5
