@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	std::cout<<"Starting test 3: deletes";
+	std::cout<<"Starting test 3: deletes\n";
 
 	for (int x = 0; x<KV_in_page* multiplier; x=x+7) {
 		//std::cout<<"inserting:"<<x<<"\n";

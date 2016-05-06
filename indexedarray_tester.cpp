@@ -13,7 +13,11 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-
+/*
+	int num_inputs2 = 327680000;
+	std::string filepath = "/tmp/LSM_index.bin";
+	IndexedArray BPT(num_inputs2, filepath.c_str(), true);
+*/
 
 	int num_inputs = 8192*3;
 	keyValue* bulk = new keyValue[num_inputs];

@@ -20,7 +20,7 @@ class BasicArray : public Storage {
 		int endarray;
 
 		//size of the file in disk (if used)
-		int filesize;
+		double filesize;
 
 		bool verbose;
 	public:

@@ -57,8 +57,8 @@ LSM::LSM(int level_types_input, int c0_size_input, int ratio_input, bool verbose
 
 	//first level of LSM tree doesn't need a file path
 	lsm_storage_head->level_storage = new Storage*[1];
-	//lsm_storage_head->level_storage[0] = new SortedArray(c0_size* KV_in_page, verbose);
-	lsm_storage_head->level_storage[0] = new BasicArray(c0_size* KV_in_page, verbose);
+	lsm_storage_head->level_storage[0] = new SortedArray(c0_size* KV_in_page, verbose);
+	//lsm_storage_head->level_storage[0] = new Sor(c0_size* KV_in_page, verbose);
 	lsm_storage_head->next_node = nullptr;
 	lsm_storage_head->level_fill = 1;
 

@@ -1,0 +1,16 @@
+./lsm_mt_queue.exe 25 4 0 1000 1000 100 0 0 0 1 1
+Load time: 0.0160552 Read/Update time: 0.0009879 elapsed time: 0.0172159s.   Number of operations:2000
+Average elapsed time for 1 runs: 0.0172159s
+./lsm_mt_queue.exe 25 4 0 10000 10000 100 0 0 0 1 1
+Load time: 0.103638 Read/Update time: 0.0101779 elapsed time: 0.113969s.   Number of operations:20000
+Average elapsed time for 1 runs: 0.113969s
+./lsm_mt_queue.exe 25 4 0 100000 100000 100 0 0 0 1 1
+Load time: 1.36926 Read/Update time: 0.0907092 elapsed time: 1.46011s.   Number of operations:200000
+Average elapsed time for 1 runs: 1.46011s
+./lsm_mt_queue.exe 25 4 0 1000000 1000000 100 0 0 0 1 1
+Load time: 15.0495 Read/Update time: 1.33651 elapsed time: 16.3861s.   Number of operations:2000000
+Average elapsed time for 1 runs: 16.3861s
+./lsm_mt_queue.exe 25 4 0 10000000 10000000 100 0 0 0 1 1
+Load time: 156.363 Read/Update time: 18.8177 elapsed time: 175.181s.   Number of operations:20000000
+Average elapsed time for 1 runs: 175.181s
+./lsm_mt_queue.exe 25 4 0 100000000 100000000 100 0 0 0 1 1

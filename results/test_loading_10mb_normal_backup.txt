@@ -1,0 +1,33 @@
+./lsm_mt_queue.exe 2500 4 0 0 1000 0 1 0 100000000 1 1
+Load time: 1.08e-07 Read/Update time: 0.0204445 elapsed time: 0.02054s.   Number of operations:1000
+Average elapsed time for 1 runs: 0.02054s
+./lsm_mt_queue.exe 2500 4 0 0 10000 0 1 0 100000000 1 1
+Load time: 1.55e-07 Read/Update time: 0.122683 elapsed time: 0.122771s.   Number of operations:10000
+Average elapsed time for 1 runs: 0.122771s
+./lsm_mt_queue.exe 2500 4 0 0 100000 0 1 0 100000000 1 1
+Load time: 8.1e-08 Read/Update time: 4.86116 elapsed time: 4.86124s.   Number of operations:100000
+Average elapsed time for 1 runs: 4.86124s
+./lsm_mt_queue.exe 2500 4 0 0 1000000 0 1 0 100000000 1 1
+Load time: 1.27e-07 Read/Update time: 392.25 elapsed time: 392.25s.   Number of operations:1000000
+Average elapsed time for 1 runs: 392.25s
+./lsm_mt_queue.exe 2500 4 0 0 10000000 0 1 0 100000000 1 1
+Load time: 1.85e-07 Read/Update time: 4967.64 elapsed time: 4967.64s.   Number of operations:10000000
+Average elapsed time for 1 runs: 4967.64s
+./lsm_mt_queue.exe 2500 4 0 0 100000000 0 1 0 100000000 1 1
+Load time: 1.69e-07 Read/Update time: 51435.8 elapsed time: 51435.8s.   Number of operations:100000000
+Average elapsed time for 1 runs: 51435.8s
+
+
+-rw------- 1 zhiqian zhiqian         0 Apr 29 13:12 config-err-9HbWc5
+-rw-rw-r-- 1 zhiqian zhiqian  11522048 May  2 13:41 LSM1_0.bin
+-rw-rw-r-- 1 zhiqian zhiqian  11522048 May  2 13:52 LSM1_1.bin
+-rw-rw-r-- 1 zhiqian zhiqian  11522048 May  2 14:03 LSM1_2.bin
+-rw-rw-r-- 1 zhiqian zhiqian  11522048 May  2 14:14 LSM1_3.bin
+-rw-rw-r-- 1 zhiqian zhiqian  46080000 May  2 12:57 LSM2_0.bin
+-rw-rw-r-- 1 zhiqian zhiqian  46080000 May  2 13:41 LSM2_1.bin
+-rw-rw-r-- 1 zhiqian zhiqian  46080000 May  2 11:29 LSM2_2.bin
+-rw-rw-r-- 1 zhiqian zhiqian  46080000 May  2 12:13 LSM2_3.bin
+-rw-rw-r-- 1 zhiqian zhiqian 184320000 May  2 04:08 LSM3_0.bin
+-rw-rw-r-- 1 zhiqian zhiqian 184320000 May  2 07:04 LSM3_1.bin
+-rw-rw-r-- 1 zhiqian zhiqian 184320000 May  2 10:00 LSM3_2.bin
+-rw-rw-r-- 1 zhiqian zhiqian 184320000 May  2 12:57 LSM3_3.bin

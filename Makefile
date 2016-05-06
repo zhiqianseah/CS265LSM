@@ -170,29 +170,37 @@ lsm_test_vary_ratio_normal:
 	./lsm_mt_queue.exe 4 64 0 0 10000000 50 1 0 1000 1 10
 
 lsm_test_multi_threaded:
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 100 0 0 0 1 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 100 0 0 0 2 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 100 0 0 0 3 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 100 0 0 0 4 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 90 0 0 0 1 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 90 0 0 0 2 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 90 0 0 0 3 10	
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 90 0 0 0 4 10		
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 50 0 0 0 1 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 50 0 0 0 2 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 50 0 0 0 3 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 50 0 0 0 4 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 10 0 0 0 1 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 10 0 0 0 2 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 10 0 0 0 3 10
-	./lsm_mt_queue.exe 4 4 0 10000000 10000000 10 0 0 0 4 10
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 100 0 0 0 2 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 100 0 0 0 3 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 100 0 0 0 4 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 90 0 0 0 2 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 90 0 0 0 3 1	
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 90 0 0 0 4 1		
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 50 0 0 0 2 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 50 0 0 0 3 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 50 0 0 0 4 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 10 0 0 0 2 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 10 0 0 0 3 1
+	./lsm_mt_queue.exe 4 4 0 10000000 10000000 10 0 0 0 4 1
 
+
+lsm_test_loading_1mb:
+	./lsm_mt_queue.exe 250 4 0 1000 0 0 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000 0 0 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 100000 0 0 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 1000000 0 0 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 0 0 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 100000000 0 0 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 1000000000 0 0 0 0 0 1 1
 
 lsm_test_loading_10mb:
 	./lsm_mt_queue.exe 2500 4 0 1000 0 0 0 0 0 1 10
 	./lsm_mt_queue.exe 2500 4 0 10000 0 0 0 0 0 1 10
 	./lsm_mt_queue.exe 2500 4 0 100000 0 0 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 1000000000 0 0 0 0 0 1 10
 	./lsm_mt_queue.exe 2500 4 0 1000000 0 0 0 0 0 1 10
 	./lsm_mt_queue.exe 2500 4 0 10000000 0 0 0 0 0 1 10
 	./lsm_mt_queue.exe 2500 4 0 100000000 0 0 0 0 0 1 10
@@ -200,45 +208,220 @@ lsm_test_loading_10mb:
 lsm_test_loading_huge:
 	./lsm_mt_queue.exe 2500 4 0 1000000000 0 0 0 0 0 1 1
 
-# 10 million loading, 10 million random reads/writes. varying read-write percentage
+
 lsm_test_vary_read_percentage_large:
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 100 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 90 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 80 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 70 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 60 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 50 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 40 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 30 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 20 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 10 0 0 0 1 10
-	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 0 0 0 0 1 10
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 80 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 70 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 60 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 40 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 30 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 20 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 0 0 0 0 1 1
 
 
-lsm_test_loading_basic:
-	./lsm_mt_queue.exe 4 4 0 1000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4 4 0 10000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4 4 0 100000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4 4 0 1000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4 4 0 10000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4 4 0 100000000 0 0 0 0 0 1 1
+lsm_test_vary_read_percentage_1mb:
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 80 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 70 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 60 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 40 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 30 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 20 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 0 0 0 0 1 1
 
-lsm_test_loading_basic2:
-	./lsm_mt_queue.exe 40 4 0 1000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 40 4 0 10000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 40 4 0 100000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 40 4 0 1000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 40 4 0 10000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 40 4 0 100000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 400 4 0 1000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 400 4 0 10000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 400 4 0 100000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 400 4 0 1000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 400 4 0 10000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 400 4 0 100000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4000 4 0 1000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4000 4 0 10000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4000 4 0 100000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4000 4 0 1000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4000 4 0 10000000 0 0 0 0 0 1 1
-	./lsm_mt_queue.exe 4000 4 0 100000000 0 0 0 0 0 1 1
+lsm_test_vary_read_percentage_100kb:
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 80 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 70 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 60 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 40 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 30 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 20 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 0 0 0 0 1 1
+
+
+lsm_test_multi_threaded_100kb:
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 100 0 0 0 2 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 100 0 0 0 3 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 100 0 0 0 4 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 90 0 0 0 2 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 90 0 0 0 3 1	
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 90 0 0 0 4 1		
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 50 0 0 0 2 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 50 0 0 0 3 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 50 0 0 0 4 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 10 0 0 0 2 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 10 0 0 0 3 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 10 0 0 0 4 1
+
+lsm_test_vary_read_percentage_100kb_normal:
+	./lsm_mt_queue.exe 25 4 0 0 20000000 100 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 80 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 70 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 60 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 40 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 30 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 20 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 0 1 0 10000000 1 1
+
+
+lsm_test_multi_threaded_100kb_normal:
+	./lsm_mt_queue.exe 25 4 0 0 20000000 100 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 100 1 0 10000000 2 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 100 1 0 10000000 0 3 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 100 1 0 10000000 4 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 90 0 0 0 2 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 90 0 0 0 3 1	
+	./lsm_mt_queue.exe 25 4 0 0 20000000 90 0 0 0 4 1		
+	./lsm_mt_queue.exe 25 4 0 0 20000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 50 0 0 0 2 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 50 0 0 0 3 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 50 0 0 0 4 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 10 0 0 0 2 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 10 0 0 0 3 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 10 0 0 0 4 1
+
+
+lsm_test_vary_ratio_normal_100kb:
+	./lsm_mt_queue.exe 25 2 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 8 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 16 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 32 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 64 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 2 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 8 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 16 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 32 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 64 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 2 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 4 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 8 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 16 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 32 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 25 64 0 0 20000000 90 1 0 10000000 1 1
+
+lsm_test_vary_ratio_normal_1mb:
+	./lsm_mt_queue.exe 250 2 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 4 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 8 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 16 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 32 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 64 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 2 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 4 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 8 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 16 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 32 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 64 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 2 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 4 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 8 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 16 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 32 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 250 64 0 0 20000000 90 1 0 10000000 1 1
+
+
+lsm_test_vary_ratio_normal_10mb:
+	./lsm_mt_queue.exe 2500 2 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 4 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 8 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 16 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 32 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 64 0 0 20000000 50 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 2 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 4 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 8 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 16 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 32 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 64 0 0 20000000 10 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 2 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 4 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 8 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 16 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 32 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 64 0 0 20000000 90 1 0 10000000 1 1
+
+
+
+lsm_test_vary_ratio_normal_10mb_part2:
+	./lsm_mt_queue.exe 2500 2 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 4 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 8 0 0 20000000 90 1 0 10000000 1 1
+	./lsm_mt_queue.exe 2500 16 0 0 20000000 90 1 0 10000000 1 1
+
+lsm_test_loading_10mb_normal:
+	./lsm_mt_queue.exe 2500 4 0 0 1000 0 1 0 100000000 1 1
+	./lsm_mt_queue.exe 2500 4 0 0 10000 0 1 0 100000000 1 1
+	./lsm_mt_queue.exe 2500 4 0 0 100000 0 1 0 100000000 1 1
+	./lsm_mt_queue.exe 2500 4 0 0 1000000 0 1 0 100000000 1 1
+	./lsm_mt_queue.exe 2500 4 0 0 10000000 0 1 0 100000000 1 1
+	./lsm_mt_queue.exe 2500 4 0 0 100000000 0 1 0 100000000 1 1
+
+
+lsm_test_vary_ratio_all:
+	./lsm_mt_queue.exe 25 2 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 25 8 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 25 16 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 25 2 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 25 8 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 25 16 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 25 2 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 25 8 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 25 16 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 250 2 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 250 8 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 250 16 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 250 2 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 250 8 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 250 16 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 250 2 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 250 4 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 250 8 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 250 16 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 2 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 8 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 16 0 10000000 10000000 50 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 2 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 8 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 16 0 10000000 10000000 10 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 2 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 4 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 8 0 10000000 10000000 90 0 0 0 1 1
+	./lsm_mt_queue.exe 2500 16 0 10000000 10000000 90 0 0 0 1 1
+
+lsm_test_loading_reading_100kb:
+	./lsm_mt_queue.exe 25 4 0 1000 1000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000 10000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 100000 100000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 1000000 1000000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 10000000 10000000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 100000000 100000000 100 0 0 0 1 1
+	./lsm_mt_queue.exe 25 4 0 1000000000 1000000000 100 0 0 0 1 1
